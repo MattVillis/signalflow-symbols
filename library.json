@@ -1,24 +1,6 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-09-18T08:22:02.876Z",
-  "library": [
-    {
-      "id": "sym_seed_test",
-      "rev": 1,
-      "name": "SEED TEST",
-      "category": "Custom",
-      "width": 170,
-      "ports": [
-        {
-          "id": "p0",
-          "label": "IN",
-          "side": "left",
-          "dir": "in",
-          "signal": "video",
-          "conn": "HDMI"
-        }
-      ]
-    }
-  ]
+  "updated": "2026-09-18T08:22:59.550Z",
+  "library": []
 }
