@@ -1,6 +1,32 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-09-18T00:00:00.000Z",
-  "library": []
+  "updated": "2026-09-18T08:18:12.128Z",
+  "library": [
+    {
+      "id": "sym_test_e2e",
+      "rev": 1,
+      "name": "E2E TEST DEVICE",
+      "category": "Custom",
+      "width": 170,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "IN 1",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "HDMI"
+        },
+        {
+          "id": "p1",
+          "label": "OUT 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "HDMI"
+        }
+      ]
+    }
+  ]
 }
