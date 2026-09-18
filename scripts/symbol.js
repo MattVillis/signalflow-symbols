@@ -1,7 +1,7 @@
 // Shared by the validate and publish workflows (loaded via actions/github-script)
 // and by the maintainer bridge's direct publish.
 const SIGNALS = ["video", "audio", "network", "fiber", "control", "power"];
-const SIDES = ["left", "right"], DIRS = ["in", "out", "bi"], KINDS = ["in", "out", "link", "any"];
+const SIDES = ["left", "right"], DIRS = ["in", "out", "bi"], KINDS = ["in", "out", "link", "aux", "any"];
 
 // The app opens a pre-filled issue whose body carries the symbol in a ```json block.
 function parseSubmission(body) {
@@ -32,12 +32,12 @@ function validate(sym) {
   if (modular) {
     sym.cards.forEach((c, i) => {
       if (!c || typeof c.name !== "string" || !c.name.trim()) errs.push(`card ${i + 1}: missing name`);
-      if (!KINDS.includes(c?.kind)) errs.push(`card ${i + 1}: kind must be in|out|link|any`);
+      if (!KINDS.includes(c?.kind)) errs.push(`card ${i + 1}: kind must be in|out|link|aux|any`);
       validatePorts(c?.ports, `card ${i + 1}`, errs, false);
     });
     sym.slots.forEach((sl, i) => {
       if (!sl || typeof sl.label !== "string" || !sl.label.trim()) errs.push(`slot ${i + 1}: missing label`);
-      if (!KINDS.includes(sl?.accepts)) errs.push(`slot ${i + 1}: accepts must be in|out|link|any`);
+      if (!KINDS.includes(sl?.accepts)) errs.push(`slot ${i + 1}: accepts must be in|out|link|aux|any`);
       if (sl?.card != null && !sym.cards.some(c => c.id === sl.card)) errs.push(`slot ${i + 1}: card \`${sl.card}\` is not in cards`);
     });
   }
