@@ -1,0 +1,54 @@
+name: Publish approved symbol
+on:
+  issues:
+    types: [labeled]
+permissions:
+  contents: write
+  issues: write
+jobs:
+  publish:
+    if: github.event.label.name == 'approved' && startsWith(github.event.issue.title, '[symbol]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        id: merge
+        with:
+          script: |
+            const lib = require(`${process.env.GITHUB_WORKSPACE}/scripts/symbol.js`);
+            const fs = require('fs');
+            const issue = context.payload.issue;
+            const say = body => github.rest.issues.createComment({ ...context.repo, issue_number: issue.number, body });
+            let sym;
+            try {
+              sym = lib.normalise(lib.parseSubmission(issue.body));
+              const errs = lib.validate(sym);
+              if (errs.length) throw new Error(errs.join('; '));
+            } catch (e) {
+              await say(`❌ Not published — the submission no longer validates: ${e.message}`);
+              core.setFailed(e.message); return;
+            }
+            const file = JSON.parse(fs.readFileSync('library.json', 'utf8'));
+            file.library = file.library || [];
+            const what = lib.upsert(file.library, sym);
+            file.updated = new Date().toISOString();
+            fs.writeFileSync('library.json', JSON.stringify(file, null, 2) + '\n');
+            core.setOutput('msg', `${what === 'added' ? 'Add' : 'Update'} symbol ${sym.name} (#${issue.number})`);
+            core.setOutput('what', what);
+            core.setOutput('name', sym.name);
+      - run: |
+          git config user.name "signalflow-bot"
+          git config user.email "signalflow-bot@users.noreply.github.com"
+          git add library.json
+          git commit -m "${{ steps.merge.outputs.msg }}"
+          git push
+      - uses: actions/github-script@v7
+        env:
+          NAME: ${{ steps.merge.outputs.name }}
+          WHAT: ${{ steps.merge.outputs.what }}
+        with:
+          script: |
+            const issue = context.payload.issue;
+            await github.rest.issues.createComment({ ...context.repo, issue_number: issue.number,
+              body: `🚀 **${process.env.NAME}** ${process.env.WHAT} in \`library.json\`. Every SignalFlow app picks it up on its next sync (within 30 minutes, or Repo → Sync now).` });
+            await github.rest.issues.update({ ...context.repo, issue_number: issue.number, state: 'closed', state_reason: 'completed' });

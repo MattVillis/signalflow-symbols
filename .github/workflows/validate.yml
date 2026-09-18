@@ -1,0 +1,44 @@
+name: Validate symbol submission
+on:
+  issues:
+    types: [opened, edited]
+permissions:
+  issues: write
+  contents: read
+jobs:
+  validate:
+    if: startsWith(github.event.issue.title, '[symbol]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const lib = require(`${process.env.GITHUB_WORKSPACE}/scripts/symbol.js`);
+            const fs = require('fs');
+            const issue = context.payload.issue;
+            const say = body => github.rest.issues.createComment({ ...context.repo, issue_number: issue.number, body });
+            const label = (add, remove) => Promise.all([
+              add && github.rest.issues.addLabels({ ...context.repo, issue_number: issue.number, labels: [add] }),
+              remove && github.rest.issues.removeLabel({ ...context.repo, issue_number: issue.number, name: remove }).catch(() => {}),
+            ]);
+            let sym;
+            try { sym = lib.parseSubmission(issue.body); }
+            catch (e) {
+              await say(`❌ Could not parse the JSON in this issue: ${e.message}\n\nEdit the issue so the body contains a single \`\`\`json block with the symbol.`);
+              await label('invalid', 'symbol'); return;
+            }
+            const errs = lib.validate(sym);
+            if (errs.length) {
+              await say(`❌ Symbol rejected by validation:\n\n- ${errs.join('\n- ')}\n\nEdit the issue to fix it; validation re-runs automatically.`);
+              await label('invalid', 'symbol'); return;
+            }
+            const norm = lib.normalise(sym);
+            const current = JSON.parse(fs.readFileSync('library.json', 'utf8')).library || [];
+            const sameId = current.find(d => d.id === norm.id);
+            const sameName = current.find(d => d.id !== norm.id && d.name === norm.name);
+            const notes = [];
+            if (sameId) notes.push(`ℹ️ id \`${norm.id}\` already exists (**${sameId.name}**, rev ${sameId.rev}) — approving will **update** it.`);
+            if (sameName) notes.push(`⚠️ a different symbol already has the name **${norm.name}** (id \`${sameName.id}\`) — approving will add a second one.`);
+            await say(`✅ Valid submission.\n\n${lib.summary(norm)}\n\n${notes.join('\n')}\n\nMaintainer: add the **approved** label to publish it to \`library.json\`; close the issue to reject.`);
+            await label('symbol', 'invalid');
