@@ -1,11 +1,11 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-09-18T08:25:35.188Z",
+  "updated": "2026-09-18T09:58:06.150Z",
   "library": [
     {
       "id": "symmu6koddrg",
-      "rev": 1,
+      "rev": 2,
       "name": "NETGEAR M4250-26G4F-POE+",
       "category": "Network",
       "width": 200,
