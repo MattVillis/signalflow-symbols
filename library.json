@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-15T11:53:04.605Z",
+  "updated": "2026-10-15T11:58:13.902Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -1158,6 +1158,383 @@
           "dir": "out",
           "signal": "power",
           "conn": "IEC C13"
+        }
+      ]
+    },
+    {
+      "id": "symmv51kwhy19",
+      "rev": 3,
+      "name": "CUSTOM BACK PANEL",
+      "category": "Custom",
+      "width": 240,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "SDI IN 1",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p1",
+          "label": "SDI IN 2",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p2",
+          "label": "SDI IN 3",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p3",
+          "label": "SDI IN 4",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p4",
+          "label": "SDI IN 5",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p5",
+          "label": "SDI IN 6",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p6",
+          "label": "SDI IN 7",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p7",
+          "label": "SDI IN 8",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p8",
+          "label": "SDI IN 9",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p9",
+          "label": "SDI IN 10",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p10",
+          "label": "SDI IN 11",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p11",
+          "label": "SDI IN 12",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p12",
+          "label": "SDI IN 13",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p13",
+          "label": "SDI IN 14",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p14",
+          "label": "SDI IN 15",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p15",
+          "label": "SDI IN 16",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p16",
+          "label": "SDI OUT 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p17",
+          "label": "SDI OUT 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p18",
+          "label": "SDI OUT 3",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p19",
+          "label": "SDI OUT 4",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p20",
+          "label": "SDI OUT 5",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p21",
+          "label": "SDI OUT 6",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p22",
+          "label": "SDI OUT 7",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p23",
+          "label": "SDI OUT 8",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p24",
+          "label": "SDI OUT 9",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p25",
+          "label": "SDI OUT 10",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p26",
+          "label": "SDI OUT 11",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p27",
+          "label": "SDI OUT 12",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p28",
+          "label": "SDI OUT 13",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p29",
+          "label": "SDI OUT 14",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p30",
+          "label": "SDI OUT 15",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p31",
+          "label": "SDI OUT 16",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "12G SDI"
+        },
+        {
+          "id": "p32",
+          "label": "HDMI IN 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "video",
+          "conn": "HDMI"
+        },
+        {
+          "id": "p33",
+          "label": "HDMI IN 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "video",
+          "conn": "HDMI"
+        },
+        {
+          "id": "p34",
+          "label": "HDMI OUT 1",
+          "side": "right",
+          "dir": "bi",
+          "signal": "video",
+          "conn": "HDMI"
+        },
+        {
+          "id": "p35",
+          "label": "HDMI OUT 2",
+          "side": "right",
+          "dir": "bi",
+          "signal": "video",
+          "conn": "HDMI"
+        },
+        {
+          "id": "p36",
+          "label": "EXT. GENLOCK IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "3G SDI"
+        },
+        {
+          "id": "p37",
+          "label": "EXT. GENLOCK OUT",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "3G SDI"
+        },
+        {
+          "id": "qmv5275gl1y",
+          "label": "NETWORK IN 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP28"
+        },
+        {
+          "id": "qmv5275gl1z",
+          "label": "NETWORK IN 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP28"
+        },
+        {
+          "id": "qmv5275gl20",
+          "label": "NETWORK IN 3",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP28"
+        },
+        {
+          "id": "qmv5275gl21",
+          "label": "NETWORK IN 4",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP28"
+        },
+        {
+          "id": "qmv527j4922",
+          "label": "NETWORK OUT 1",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP28"
+        },
+        {
+          "id": "qmv527j4923",
+          "label": "NETWORK OUT 2",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP28"
+        },
+        {
+          "id": "qmv527j4924",
+          "label": "NETWORK OUT 3",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP28"
+        },
+        {
+          "id": "qmv527j4925",
+          "label": "NETWORK OUT 4",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP28"
         }
       ]
     }
