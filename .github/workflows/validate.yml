@@ -7,7 +7,7 @@ permissions:
   contents: read
 jobs:
   validate:
-    if: startsWith(github.event.issue.title, '[symbol]')
+    if: (startsWith(github.event.issue.title, '[symbol]') || contains(github.event.issue.body, 'Symbol submission from SignalFlow'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

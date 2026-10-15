@@ -7,7 +7,7 @@ permissions:
   issues: write
 jobs:
   publish:
-    if: github.event.label.name == 'approved' && startsWith(github.event.issue.title, '[symbol]')
+    if: github.event.label.name == 'approved' && (startsWith(github.event.issue.title, '[symbol]') || contains(github.event.issue.body, 'Symbol submission from SignalFlow'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

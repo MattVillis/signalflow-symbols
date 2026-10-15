@@ -4,14 +4,20 @@ const SIGNALS = ["video", "audio", "network", "fiber", "control", "power"];
 const SIDES = ["left", "right"], DIRS = ["in", "out", "bi"], KINDS = ["in", "out", "link", "aux", "any"];
 
 // The app opens a pre-filled issue whose body carries the symbol in a ```json block.
+// A symbol too big for a link is pasted by hand, so the block may be empty with the JSON beside it:
+// fall back to the outermost {...} in the body.
 function parseSubmission(body) {
   const m = /```json\s*([\s\S]*?)```/.exec(body || "");
-  return JSON.parse((m ? m[1] : body || "").trim());
+  if (m && m[1].trim()) return JSON.parse(m[1].trim());
+  const t = String(body || ""), a = t.indexOf("{"), b = t.lastIndexOf("}");
+  if (a < 0 || b < a) throw new Error("no JSON found - paste the symbol between the ```json lines");
+  return JSON.parse(t.slice(a, b + 1));
 }
 
-function validatePorts(list, where, errs, allowEmpty) {
+// caps match the app (sanitizePorts): 256 port entries on a chassis, 64 on a card
+function validatePorts(list, where, errs, allowEmpty, max = 256) {
   if (!Array.isArray(list) || (!list.length && !allowEmpty)) { errs.push(`${where}: \`ports\` must be a non-empty array`); return; }
-  if (list.length > 64) errs.push(`${where}: too many ports (${list.length} > 64)`);
+  if (list.length > max) errs.push(`${where}: too many ports (${list.length} > ${max})`);
   list.forEach((p, i) => {
     if (!p || typeof p.label !== "string" || !p.label.trim()) errs.push(`${where} port ${i + 1}: missing label`);
     if (!SIDES.includes(p?.side)) errs.push(`${where} port ${i + 1}: side must be left|right`);
@@ -33,7 +39,7 @@ function validate(sym) {
     sym.cards.forEach((c, i) => {
       if (!c || typeof c.name !== "string" || !c.name.trim()) errs.push(`card ${i + 1}: missing name`);
       if (!KINDS.includes(c?.kind)) errs.push(`card ${i + 1}: kind must be in|out|link|aux|any`);
-      validatePorts(c?.ports, `card ${i + 1}`, errs, false);
+      validatePorts(c?.ports, `card ${i + 1}`, errs, false, 64);
     });
     sym.slots.forEach((sl, i) => {
       if (!sl || typeof sl.label !== "string" || !sl.label.trim()) errs.push(`slot ${i + 1}: missing label`);
@@ -50,13 +56,14 @@ const normPorts = list => (list || []).map((p, i) => ({
   label: p.label.trim().toUpperCase().slice(0, 15),
   side: p.side, dir: p.dir, signal: p.signal,
   conn: typeof p.conn === "string" ? p.conn : "",
+  ...(p.gap === true ? { gap: true } : {}),   // the half-row space above a port group
 }));
 function normalise(sym) {
   const modular = isModular(sym);
   return {
     id: sym.id.trim(),
     rev: Math.max(1, Number(sym.rev) || 1),
-    name: sym.name.trim().toUpperCase().slice(0, 32),
+    name: sym.name.trim().toUpperCase().slice(0, 36),
     category: typeof sym.category === "string" ? sym.category : "Custom",
     width: Math.max(130, Math.min(280, Number(sym.width) || 170)),
     ports: normPorts(sym.ports),
