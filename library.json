@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-15T10:18:20.667Z",
+  "updated": "2026-10-15T10:18:38.009Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -651,6 +651,199 @@
           "dir": "in",
           "signal": "power",
           "conn": "IEC C14"
+        }
+      ]
+    },
+    {
+      "id": "symmuzgrb6y12",
+      "rev": 1,
+      "name": "ROSENDAHL NANOSYNCS HD",
+      "category": "Processing",
+      "width": 240,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "VID SYNC IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "video",
+          "conn": "BNC"
+        },
+        {
+          "id": "p1",
+          "label": "WORD CLK IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p2",
+          "label": "LTC IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "control",
+          "conn": "LTC"
+        },
+        {
+          "id": "p3",
+          "label": "USB",
+          "side": "left",
+          "dir": "bi",
+          "signal": "control",
+          "conn": ""
+        },
+        {
+          "id": "p4",
+          "label": "POWER",
+          "side": "left",
+          "dir": "in",
+          "signal": "power",
+          "conn": "IEC C14"
+        },
+        {
+          "id": "p5",
+          "label": "VID SYNC OUT 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "BNC"
+        },
+        {
+          "id": "p6",
+          "label": "VID SYNC OUT 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "BNC"
+        },
+        {
+          "id": "p7",
+          "label": "VID SYNC OUT 3",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "BNC"
+        },
+        {
+          "id": "p8",
+          "label": "VID SYNC OUT 4",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "BNC"
+        },
+        {
+          "id": "p9",
+          "label": "VID SYNC OUT 5",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "BNC"
+        },
+        {
+          "id": "p10",
+          "label": "VID SYNC OUT 6",
+          "side": "right",
+          "dir": "out",
+          "signal": "video",
+          "conn": "BNC"
+        },
+        {
+          "id": "p11",
+          "label": "WORD CLK OUT 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p12",
+          "label": "WORD CLK OUT 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p13",
+          "label": "WORD CLK OUT 3",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p14",
+          "label": "WORD CLK OUT 4",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p15",
+          "label": "WORD CLK OUT 5",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p16",
+          "label": "WORD CLK OUT 6",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p17",
+          "label": "WORD CLK OUT 7",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p18",
+          "label": "WORD CLK OUT 8",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p19",
+          "label": "AES OUT 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "audio",
+          "conn": "AES3"
+        },
+        {
+          "id": "p20",
+          "label": "AES OUT 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "audio",
+          "conn": "AES3"
+        },
+        {
+          "id": "p21",
+          "label": "SPDIF OUT",
+          "side": "right",
+          "dir": "out",
+          "signal": "audio",
+          "conn": ""
+        },
+        {
+          "id": "p22",
+          "label": "LTC OUT",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "LTC"
         }
       ]
     }
