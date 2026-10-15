@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-15T11:58:13.902Z",
+  "updated": "2026-10-15T11:58:21.417Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -1535,6 +1535,47 @@
           "dir": "bi",
           "signal": "network",
           "conn": "SFP28"
+        }
+      ]
+    },
+    {
+      "id": "symmv57jhqzv",
+      "rev": 1,
+      "name": "FOCUSRITE AM2",
+      "category": "Custom",
+      "width": 170,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "IN 1",
+          "side": "left",
+          "dir": "in",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p1",
+          "label": "XLR OUT L",
+          "side": "right",
+          "dir": "out",
+          "signal": "audio",
+          "conn": "XLR"
+        },
+        {
+          "id": "p2",
+          "label": "XLR OUT R",
+          "side": "right",
+          "dir": "out",
+          "signal": "audio",
+          "conn": "XLR"
+        },
+        {
+          "id": "p3",
+          "label": "BALANCE JACK",
+          "side": "right",
+          "dir": "out",
+          "signal": "audio",
+          "conn": "TRS"
         }
       ]
     }
