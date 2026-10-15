@@ -7,7 +7,7 @@ permissions:
   issues: write
 jobs:
   publish:
-    if: github.event.label.name == 'approved' && (startsWith(github.event.issue.title, '[symbol]') || contains(github.event.issue.body, 'Symbol submission from SignalFlow'))
+    if: github.event.label.name == 'approved' && (startsWith(github.event.issue.title, '[symbol]') || startsWith(github.event.issue.title, '[fix]') || contains(github.event.issue.body, 'Symbol submission from SignalFlow') || contains(github.event.issue.body, 'Symbol correction from SignalFlow'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +26,12 @@ jobs:
             } catch (e) {
               await github.rest.issues.createComment({ ...context.repo, issue_number: issue.number, body: `❌ Not published — the submission no longer validates: ${e.message}` });
               core.setFailed(e.message); return;
+            }
+            const fix = lib.fixTarget(issue.body);
+            if (fix?.target === 'builtin') {
+              const msg = 'this is a correction to a built-in symbol, which lives in the app itself rather than the shared library';
+              await github.rest.issues.createComment({ ...context.repo, issue_number: issue.number, body: `❌ Not published — ${msg}. It gets fixed in the app; close this issue when that ships.` });
+              core.setFailed(msg); return;
             }
             fs.writeFileSync(`${process.env.RUNNER_TEMP}/symbol.json`, JSON.stringify(sym));
             core.setOutput('name', sym.name);

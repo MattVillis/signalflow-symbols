@@ -93,4 +93,13 @@ function upsert(library, sym) {
   return "updated";
 }
 
-module.exports = { parseSubmission, validate, normalise, summary, upsert };
+// A correction ("Suggest a fix" in the app) carries <!-- sf-fix {"target":"builtin"|"shared","id":"..."} -->.
+// A built-in lives in the app's code, so it is never published to library.json; a shared fix is an update.
+function fixTarget(body) {
+  const m = /<!--\s*sf-fix\s+(\{[^]*?\})\s*-->/.exec(body || "");
+  if (!m) return null;
+  try { const t = JSON.parse(m[1]); return t && (t.target === "builtin" || t.target === "shared") ? { target: t.target, id: String(t.id || "") } : null; }
+  catch { return null; }
+}
+
+module.exports = { parseSubmission, validate, normalise, summary, upsert, fixTarget };
