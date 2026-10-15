@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-09-18T09:58:06.150Z",
+  "updated": "2026-10-15T10:17:34.839Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -284,6 +284,279 @@
         },
         {
           "id": "p34",
+          "label": "AC IN",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": "IEC C14"
+        }
+      ]
+    },
+    {
+      "id": "symmv6s14iv19",
+      "rev": 3,
+      "name": "NETGEAR M4300-28G (GSM4328S)",
+      "category": "Network",
+      "width": 180,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "1G LAN 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p1",
+          "label": "1G LAN 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p2",
+          "label": "1G LAN 3",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p3",
+          "label": "1G LAN 4",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p4",
+          "label": "1G LAN 5",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p5",
+          "label": "1G LAN 6",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p6",
+          "label": "1G LAN 7",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p7",
+          "label": "1G LAN 8",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p8",
+          "label": "1G LAN 9",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p9",
+          "label": "1G LAN 10",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p10",
+          "label": "1G LAN 11",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p11",
+          "label": "1G LAN 12",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p12",
+          "label": "1G LAN 13",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p13",
+          "label": "1G LAN 14",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p14",
+          "label": "1G LAN 15",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p15",
+          "label": "1G LAN 16",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p16",
+          "label": "1G LAN 17",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p17",
+          "label": "1G LAN 18",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p18",
+          "label": "1G LAN 19",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p19",
+          "label": "1G LAN 20",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p20",
+          "label": "1G LAN 21",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p21",
+          "label": "1G LAN 22",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p22",
+          "label": "1G LAN 23",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p23",
+          "label": "1G LAN 24",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p24",
+          "label": "10G LAN 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p25",
+          "label": "10G LAN 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p26",
+          "label": "SFP+ 1",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p27",
+          "label": "SFP+ 2",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p28",
+          "label": "MGMT",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p29",
+          "label": "CONSOLE",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "RS-232"
+        },
+        {
+          "id": "p30",
+          "label": "MINI-USB",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": ""
+        },
+        {
+          "id": "p31",
+          "label": "USB",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "USB-A"
+        },
+        {
+          "id": "p32",
           "label": "AC IN",
           "side": "right",
           "dir": "in",
