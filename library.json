@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-15T10:19:02.821Z",
+  "updated": "2026-10-15T11:53:04.605Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -1021,6 +1021,143 @@
           "dir": "in",
           "signal": "power",
           "conn": "IEC C14"
+        }
+      ]
+    },
+    {
+      "id": "symmv9cqrcjz",
+      "rev": 1,
+      "name": "EMO E612 POWER DISTRIBUTION PANEL",
+      "category": "Power",
+      "width": 180,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "POWER IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p1",
+          "label": "LOOP OUT",
+          "side": "left",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p2",
+          "label": "FRONT OUT 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p3",
+          "label": "FRONT OUT 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p4",
+          "label": "FRONT OUT 3",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p5",
+          "label": "FRONT OUT 4",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p6",
+          "label": "REAR OUT 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p7",
+          "label": "REAR OUT 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p8",
+          "label": "REAR OUT 3",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p9",
+          "label": "REAR OUT 4",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "TRUE1"
+        },
+        {
+          "id": "p10",
+          "label": "IEC LOCK OUT 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p11",
+          "label": "IEC LOCK OUT 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p12",
+          "label": "IEC LOCK OUT 3",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p13",
+          "label": "IEC LOCK OUT 4",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p14",
+          "label": "IEC LOCK OUT 5",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p15",
+          "label": "IEC LOCK OUT 6",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
         }
       ]
     }
