@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-15T10:17:34.839Z",
+  "updated": "2026-10-15T10:18:20.667Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -557,6 +557,95 @@
         },
         {
           "id": "p32",
+          "label": "AC IN",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": "IEC C14"
+        }
+      ]
+    },
+    {
+      "id": "symmv6uw6l11l",
+      "rev": 2,
+      "name": "NETGEAR XS708E",
+      "category": "Network",
+      "width": 180,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "10G LAN 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p1",
+          "label": "10G LAN 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p2",
+          "label": "10G LAN 3",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p3",
+          "label": "10G LAN 4",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p4",
+          "label": "10G LAN 5",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p5",
+          "label": "10G LAN 6",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p6",
+          "label": "10G LAN 7",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p7",
+          "label": "10G LAN 8",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p8",
+          "label": "SFP+ COMBO",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p9",
           "label": "AC IN",
           "side": "right",
           "dir": "in",
