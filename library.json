@@ -1,11 +1,11 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-15T10:18:38.009Z",
+  "updated": "2026-10-15T10:18:50.477Z",
   "library": [
     {
       "id": "symmu6koddrg",
-      "rev": 2,
+      "rev": 5,
       "name": "NETGEAR M4250-26G4F-POE+",
       "category": "Network",
       "width": 200,
@@ -13,7 +13,7 @@
         {
           "id": "p0",
           "label": "POE+ 1",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -21,7 +21,7 @@
         {
           "id": "p1",
           "label": "POE+ 2",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -29,7 +29,7 @@
         {
           "id": "p2",
           "label": "POE+ 3",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -37,7 +37,7 @@
         {
           "id": "p3",
           "label": "POE+ 4",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -45,7 +45,7 @@
         {
           "id": "p4",
           "label": "POE+ 5",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -53,7 +53,7 @@
         {
           "id": "p5",
           "label": "POE+ 6",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -61,7 +61,7 @@
         {
           "id": "p6",
           "label": "POE+ 7",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -69,7 +69,7 @@
         {
           "id": "p7",
           "label": "POE+ 8",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -77,7 +77,7 @@
         {
           "id": "p8",
           "label": "POE+ 9",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -85,7 +85,7 @@
         {
           "id": "p9",
           "label": "POE+ 10",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -93,7 +93,7 @@
         {
           "id": "p10",
           "label": "POE+ 11",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -101,7 +101,7 @@
         {
           "id": "p11",
           "label": "POE+ 12",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -109,7 +109,7 @@
         {
           "id": "p12",
           "label": "POE+ 13",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -117,7 +117,7 @@
         {
           "id": "p13",
           "label": "POE+ 14",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -125,7 +125,7 @@
         {
           "id": "p14",
           "label": "POE+ 15",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -133,7 +133,7 @@
         {
           "id": "p15",
           "label": "POE+ 16",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -141,7 +141,7 @@
         {
           "id": "p16",
           "label": "POE+ 17",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -149,7 +149,7 @@
         {
           "id": "p17",
           "label": "POE+ 18",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -157,7 +157,7 @@
         {
           "id": "p18",
           "label": "POE+ 19",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -165,7 +165,7 @@
         {
           "id": "p19",
           "label": "POE+ 20",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -173,7 +173,7 @@
         {
           "id": "p20",
           "label": "POE+ 21",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -181,7 +181,7 @@
         {
           "id": "p21",
           "label": "POE+ 22",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -189,7 +189,7 @@
         {
           "id": "p22",
           "label": "POE+ 23",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -197,7 +197,7 @@
         {
           "id": "p23",
           "label": "POE+ 24",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -205,7 +205,7 @@
         {
           "id": "p24",
           "label": "1G 1",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -213,7 +213,7 @@
         {
           "id": "p25",
           "label": "1G 2",
-          "side": "left",
+          "side": "right",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -221,7 +221,7 @@
         {
           "id": "p26",
           "label": "SFP 1",
-          "side": "right",
+          "side": "left",
           "dir": "bi",
           "signal": "fiber",
           "conn": ""
@@ -229,7 +229,7 @@
         {
           "id": "p27",
           "label": "SFP 2",
-          "side": "right",
+          "side": "left",
           "dir": "bi",
           "signal": "fiber",
           "conn": ""
@@ -237,7 +237,7 @@
         {
           "id": "p28",
           "label": "SFP 3",
-          "side": "right",
+          "side": "left",
           "dir": "bi",
           "signal": "fiber",
           "conn": ""
@@ -245,7 +245,7 @@
         {
           "id": "p29",
           "label": "SFP 4",
-          "side": "right",
+          "side": "left",
           "dir": "bi",
           "signal": "fiber",
           "conn": ""
@@ -253,7 +253,7 @@
         {
           "id": "p30",
           "label": "OOB MGMT",
-          "side": "right",
+          "side": "left",
           "dir": "bi",
           "signal": "network",
           "conn": "RJ45"
@@ -261,7 +261,7 @@
         {
           "id": "p31",
           "label": "CONSOLE",
-          "side": "right",
+          "side": "left",
           "dir": "bi",
           "signal": "control",
           "conn": "RS-232"
@@ -269,7 +269,7 @@
         {
           "id": "p32",
           "label": "CONSOLE USB",
-          "side": "right",
+          "side": "left",
           "dir": "bi",
           "signal": "control",
           "conn": "USB-C"
@@ -277,7 +277,7 @@
         {
           "id": "p33",
           "label": "USB",
-          "side": "right",
+          "side": "left",
           "dir": "bi",
           "signal": "control",
           "conn": "USB-A"
@@ -285,7 +285,7 @@
         {
           "id": "p34",
           "label": "AC IN",
-          "side": "right",
+          "side": "left",
           "dir": "in",
           "signal": "power",
           "conn": "IEC C14"
