@@ -53,7 +53,7 @@ function validate(sym) {
 // Library symbols are generic: show-specific VLAN/IP assignments are dropped.
 const normPorts = list => (list || []).map((p, i) => ({
   id: typeof p.id === "string" && p.id ? p.id : `p${i}`,
-  label: p.label.trim().toUpperCase().slice(0, 15),
+  label: p.label.trim().toUpperCase().slice(0, 24),   // = the app's PORT_LABEL_MAX
   side: p.side, dir: p.dir, signal: p.signal,
   conn: typeof p.conn === "string" ? p.conn : "",
   ...(p.gap === true ? { gap: true } : {}),   // the half-row space above a port group
