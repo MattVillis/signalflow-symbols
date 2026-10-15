@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-15T10:18:50.477Z",
+  "updated": "2026-10-15T10:19:02.821Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -844,6 +844,183 @@
           "dir": "out",
           "signal": "control",
           "conn": "LTC"
+        }
+      ]
+    },
+    {
+      "id": "symmuzkyxf21l",
+      "rev": 1,
+      "name": "MELLANOX SPECTRUM SN2100",
+      "category": "Network",
+      "width": 210,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "100G QSFP28 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p1",
+          "label": "100G QSFP28 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p2",
+          "label": "100G QSFP28 3",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p3",
+          "label": "100G QSFP28 4",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p4",
+          "label": "100G QSFP28 5",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p5",
+          "label": "100G QSFP28 6",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p6",
+          "label": "100G QSFP28 7",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p7",
+          "label": "100G QSFP28 8",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p8",
+          "label": "100G QSFP28 9",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p9",
+          "label": "100G QSFP28 10",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p10",
+          "label": "100G QSFP28 11",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p11",
+          "label": "100G QSFP28 12",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p12",
+          "label": "100G QSFP28 13",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p13",
+          "label": "100G QSFP28 14",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p14",
+          "label": "100G QSFP28 15",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p15",
+          "label": "100G QSFP28 16",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "QSFP28"
+        },
+        {
+          "id": "p16",
+          "label": "MGT",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p17",
+          "label": "CONSOLE",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "RS-232"
+        },
+        {
+          "id": "p18",
+          "label": "USB",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": ""
+        },
+        {
+          "id": "p19",
+          "label": "AC IN 1",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": "IEC C14"
+        },
+        {
+          "id": "p20",
+          "label": "AC IN 2",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": "IEC C14"
         }
       ]
     }
