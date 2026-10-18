@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-18T12:25:22.084Z",
+  "updated": "2026-10-18T12:26:01.085Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -1753,6 +1753,479 @@
           "dir": "in",
           "signal": "power",
           "conn": "IEC C14"
+        }
+      ]
+    },
+    {
+      "id": "symmvdnh7mrw",
+      "rev": 1,
+      "name": "NETGEAR M4300-52G-POE+",
+      "category": "Network",
+      "width": 180,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "1G POE+ 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p1",
+          "label": "1G POE+ 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p2",
+          "label": "1G POE+ 3",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p3",
+          "label": "1G POE+ 4",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p4",
+          "label": "1G POE+ 5",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p5",
+          "label": "1G POE+ 6",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p6",
+          "label": "1G POE+ 7",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p7",
+          "label": "1G POE+ 8",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p8",
+          "label": "1G POE+ 9",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p9",
+          "label": "1G POE+ 10",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p10",
+          "label": "1G POE+ 11",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p11",
+          "label": "1G POE+ 12",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p12",
+          "label": "1G POE+ 13",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p13",
+          "label": "1G POE+ 14",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p14",
+          "label": "1G POE+ 15",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p15",
+          "label": "1G POE+ 16",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p16",
+          "label": "1G POE+ 17",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p17",
+          "label": "1G POE+ 18",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p18",
+          "label": "1G POE+ 19",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p19",
+          "label": "1G POE+ 20",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p20",
+          "label": "1G POE+ 21",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p21",
+          "label": "1G POE+ 22",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p22",
+          "label": "1G POE+ 23",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p23",
+          "label": "1G POE+ 24",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p24",
+          "label": "1G POE+ 25",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p25",
+          "label": "1G POE+ 26",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p26",
+          "label": "1G POE+ 27",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p27",
+          "label": "1G POE+ 28",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p28",
+          "label": "1G POE+ 29",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p29",
+          "label": "1G POE+ 30",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p30",
+          "label": "1G POE+ 31",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p31",
+          "label": "1G POE+ 32",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p32",
+          "label": "1G POE+ 33",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p33",
+          "label": "1G POE+ 34",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p34",
+          "label": "1G POE+ 35",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p35",
+          "label": "1G POE+ 36",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p36",
+          "label": "1G POE+ 37",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p37",
+          "label": "1G POE+ 38",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p38",
+          "label": "1G POE+ 39",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p39",
+          "label": "1G POE+ 40",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p40",
+          "label": "1G POE+ 41",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p41",
+          "label": "1G POE+ 42",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p42",
+          "label": "1G POE+ 43",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p43",
+          "label": "1G POE+ 44",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p44",
+          "label": "1G POE+ 45",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p45",
+          "label": "1G POE+ 46",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p46",
+          "label": "1G POE+ 47",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p47",
+          "label": "1G POE+ 48",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p48",
+          "label": "10G UPLINK 1",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p49",
+          "label": "10G UPLINK 2",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p50",
+          "label": "SFP+ 1",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p51",
+          "label": "SFP+ 2",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p52",
+          "label": "OOB",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p53",
+          "label": "CONSOLE",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "RS-232"
+        },
+        {
+          "id": "p54",
+          "label": "MINI USB",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": ""
+        },
+        {
+          "id": "p55",
+          "label": "USB",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "USB-A"
+        },
+        {
+          "id": "p56",
+          "label": "AC IN",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": "IEC C14"
+        },
+        {
+          "id": "p57",
+          "label": "RPS",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": ""
         }
       ]
     }
