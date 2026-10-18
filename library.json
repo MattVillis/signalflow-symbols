@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-15T11:58:21.417Z",
+  "updated": "2026-10-18T12:25:22.084Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -1576,6 +1576,183 @@
           "dir": "out",
           "signal": "audio",
           "conn": "TRS"
+        }
+      ]
+    },
+    {
+      "id": "symmvdokooy1w",
+      "rev": 1,
+      "name": "NETGEAR PROSAFE XS716T",
+      "category": "Network",
+      "width": 180,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "10G LAN 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p1",
+          "label": "10G LAN 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p2",
+          "label": "10G LAN 3",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p3",
+          "label": "10G LAN 4",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p4",
+          "label": "10G LAN 5",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p5",
+          "label": "10G LAN 6",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p6",
+          "label": "10G LAN 7",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p7",
+          "label": "10G LAN 8",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p8",
+          "label": "10G LAN 9",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p9",
+          "label": "10G LAN 10",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p10",
+          "label": "10G LAN 11",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p11",
+          "label": "10G LAN 12",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p12",
+          "label": "10G LAN 13",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p13",
+          "label": "10G LAN 14",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p14",
+          "label": "10G LAN 15",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p15",
+          "label": "10G LAN 16",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p16",
+          "label": "SFP+ COMBO 1",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p17",
+          "label": "SFP+ COMBO 2",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p18",
+          "label": "USB",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "USB-A"
+        },
+        {
+          "id": "p19",
+          "label": "CONSOLE",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": ""
+        },
+        {
+          "id": "p20",
+          "label": "AC IN",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": "IEC C14"
         }
       ]
     }
