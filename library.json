@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-18T12:26:01.085Z",
+  "updated": "2026-10-19T11:33:58.869Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -2226,6 +2226,87 @@
           "dir": "in",
           "signal": "power",
           "conn": ""
+        }
+      ]
+    },
+    {
+      "id": "symmve1d8lom",
+      "rev": 1,
+      "name": "TP-LINK TL-SX1008",
+      "category": "Network",
+      "width": 180,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "LAN 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p1",
+          "label": "LAN 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p2",
+          "label": "LAN 3",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p3",
+          "label": "LAN 4",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p4",
+          "label": "LAN 5",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p5",
+          "label": "LAN 6",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p6",
+          "label": "LAN 7",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p7",
+          "label": "LAN 8",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45 10G"
+        },
+        {
+          "id": "p8",
+          "label": "POWER",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": "IEC C14"
         }
       ]
     }
