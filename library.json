@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-19T11:33:58.869Z",
+  "updated": "2026-10-19T12:33:02.140Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -2307,6 +2307,63 @@
           "dir": "in",
           "signal": "power",
           "conn": "IEC C14"
+        }
+      ]
+    },
+    {
+      "id": "symmvf81eowp",
+      "rev": 1,
+      "name": "ROSENDAHL MIF4",
+      "category": "Control",
+      "width": 180,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "LTC IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "control",
+          "conn": "XLR"
+        },
+        {
+          "id": "p1",
+          "label": "LTC OUT",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "XLR"
+        },
+        {
+          "id": "p2",
+          "label": "MIDI IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "control",
+          "conn": "MIDI"
+        },
+        {
+          "id": "p3",
+          "label": "MIDI OUT",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "MIDI"
+        },
+        {
+          "id": "p4",
+          "label": "SD/HD SYNC",
+          "side": "left",
+          "dir": "bi",
+          "signal": "video",
+          "conn": "BNC"
+        },
+        {
+          "id": "p5",
+          "label": "USB-B",
+          "side": "left",
+          "dir": "bi",
+          "signal": "control",
+          "conn": ""
         }
       ]
     }
