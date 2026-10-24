@@ -58,13 +58,15 @@ const normPorts = list => (list || []).map((p, i) => ({
   conn: typeof p.conn === "string" ? p.conn : "",
   ...(p.gap === true ? { gap: true } : {}),   // the half-row space above a port group
 }));
+// a category name as the app writes one (its cleanCatName): letters, digits, spaces and / & + -, 18 characters
+const cleanCategory = v => String(v || "").replace(/[^A-Za-z0-9 /&+-]/g, "").replace(/\s+/g, " ").trim().slice(0, 18);
 function normalise(sym) {
   const modular = isModular(sym);
   return {
     id: sym.id.trim(),
     rev: Math.max(1, Number(sym.rev) || 1),
     name: sym.name.trim().toUpperCase().slice(0, 36),
-    category: typeof sym.category === "string" ? sym.category : "Custom",
+    category: cleanCategory(sym.category) || "Custom",
     width: Math.max(130, Math.min(280, Number(sym.width) || 170)),
     ports: normPorts(sym.ports),
     ...(modular ? {
@@ -102,4 +104,75 @@ function fixTarget(body) {
   catch { return null; }
 }
 
-module.exports = { parseSubmission, validate, normalise, summary, upsert, fixTarget };
+/* ---------- categories ----------
+   The app's own categories, copied from src/App.jsx CATEGORIES (2026-10-24; the symbol desk carries the same copy).
+   Refresh all three together. */
+const APP_CATEGORIES = ["Servers", "Computers", "Processing", "LED", "Extenders", "KVM", "Display", "Cameras", "Network", "Audio", "Control", "Lighting", "Power", "Custom"];
+// every category the shared library knows: the app's, the catalog's extra ones, re-filed symbols' and shared symbols'
+function knownCategories(file) {
+  const cat = (file && file.catalog) || {};
+  return [...APP_CATEGORIES, ...(cat.cats || []), ...Object.values(cat.defs || {}).map(d => d && d.category), ...((file && file.library) || []).map(d => d.category)]
+    .filter(c => typeof c === "string" && c.trim());
+}
+const isNewCategory = (name, file) => !!cleanCategory(name) && !knownCategories(file).some(c => c.toLowerCase() === cleanCategory(name).toLowerCase());
+
+/* A category suggestion ("Suggest a category" in the app): issue "[category] NAME", the marker below, and a json block
+   {category, new, symbols: [{id, name, from, kind}]}. Approving it files those symbols under the category in
+   library.json's catalog (catalog.defs[id].category), which every app applies on its next sync. That covers built-in
+   symbols too: the catalog is how a shipped symbol is re-filed without a new app build. */
+const CAT_MARK = "Category suggestion from SignalFlow";
+const isCategoryIssue = (title, body) => /^\[category\]/i.test(title || "") || String(body || "").includes(CAT_MARK);
+function parseCategory(body) {
+  const m = /```json\s*([\s\S]*?)```/.exec(body || "");
+  if (!m || !m[1].trim()) throw new Error("no ```json block with the suggestion in it");
+  return JSON.parse(m[1].trim());
+}
+function validateCategory(s) {
+  if (!s || typeof s !== "object" || Array.isArray(s)) return ["the suggestion is not a JSON object"];
+  const errs = [], name = typeof s.category === "string" ? s.category.replace(/\s+/g, " ").trim() : "";
+  if (!/^[A-Za-z0-9 /&+-]{2,18}$/.test(name)) errs.push("`category` must be 2 to 18 letters, digits, spaces or / & + -");
+  else if (/^custom$/i.test(name)) errs.push("`Custom` is where unfiled symbols go, so nothing can be filed there");
+  if (!Array.isArray(s.symbols) || !s.symbols.length) errs.push("`symbols` must list at least one symbol");
+  else {
+    if (s.symbols.length > 100) errs.push(`too many symbols (${s.symbols.length} > 100)`);
+    s.symbols.forEach((x, i) => { if (!x || typeof x.id !== "string" || !x.id.trim() || x.id.length > 64) errs.push(`symbol ${i + 1}: missing or bad \`id\``); });
+  }
+  return errs;
+}
+function normaliseCategory(s) {
+  const seen = new Set();
+  return {
+    category: s.category.replace(/\s+/g, " ").trim(), new: !!s.new,
+    symbols: s.symbols.filter(x => !seen.has(x.id.trim()) && seen.add(x.id.trim())).map(x => ({
+      id: x.id.trim(), name: String(x.name || x.id).trim().toUpperCase().slice(0, 36), from: cleanCategory(x.from) || "Custom",
+      kind: x.kind === "builtin" || x.kind === "shared" ? x.kind : "unknown" })),
+  };
+}
+function categorySummary(s) {
+  const rows = s.symbols.map(x => `| ${x.name} | ${x.from} | ${x.kind === "builtin" ? "built-in" : x.kind} | \`${x.id}\` |`).join("\n");
+  return `**${s.category}** · ${s.new ? "new category" : "existing category"} · ${s.symbols.length} symbol${s.symbols.length === 1 ? "" : "s"}\n\n| Symbol | Now in | Kind | id |\n|---|---|---|---|\n${rows}`;
+}
+// file the symbols under the category in file.catalog (mutates file); an existing spelling of the name wins, so
+// "lighting control" files with "Lighting Control". Caps = the app's cleanCat: 64 extra categories, 2000 re-filed symbols.
+function applyCategory(file, s) {
+  const cat = file.catalog && typeof file.catalog === "object" ? file.catalog : {};
+  const cats = Array.isArray(cat.cats) ? [...cat.cats] : [];
+  const defs = cat.defs && typeof cat.defs === "object" ? { ...cat.defs } : {};
+  const name = knownCategories(file).find(c => c.toLowerCase() === s.category.toLowerCase()) || s.category;
+  if (!APP_CATEGORIES.some(c => c.toLowerCase() === name.toLowerCase()) && !cats.some(c => c.toLowerCase() === name.toLowerCase())) {
+    if (cats.length >= 64) throw new Error("the catalog already has 64 extra categories");
+    cats.push(name);
+  }
+  let moved = 0;
+  s.symbols.forEach(x => {
+    const cur = defs[x.id] || {};
+    if (cur.category !== name) { defs[x.id] = { ...cur, category: name }; moved++; }
+  });
+  if (Object.keys(defs).length > 2000) throw new Error("the catalog is full (2000 re-filed symbols)");
+  file.catalog = { cats, defs };
+  return { name, moved };
+}
+
+module.exports = { parseSubmission, validate, normalise, summary, upsert, fixTarget,
+  APP_CATEGORIES, knownCategories, isNewCategory, cleanCategory,
+  CAT_MARK, isCategoryIssue, parseCategory, validateCategory, normaliseCategory, categorySummary, applyCategory };

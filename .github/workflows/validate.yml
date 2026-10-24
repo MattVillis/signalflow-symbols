@@ -34,10 +34,12 @@ jobs:
               await label('invalid', 'symbol'); return;
             }
             const norm = lib.normalise(sym);
-            const current = JSON.parse(fs.readFileSync('library.json', 'utf8')).library || [];
+            const libFile = JSON.parse(fs.readFileSync('library.json', 'utf8'));
+            const current = libFile.library || [];
             const sameId = current.find(d => d.id === norm.id);
             const sameName = current.find(d => d.id !== norm.id && d.name === norm.name);
             const notes = [];
+            if (lib.isNewCategory(norm.category, libFile)) notes.push(`🆕 **${norm.category}** is a new category: approving this symbol creates it in every app.`);
             const fix = lib.fixTarget(issue.body);
             if (fix) {
               await github.rest.issues.addLabels({ ...context.repo, issue_number: issue.number, labels: ['fix'] });

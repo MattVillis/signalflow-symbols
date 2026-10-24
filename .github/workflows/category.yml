@@ -1,0 +1,114 @@
+name: Category suggestion
+# "Suggest a category" in the app opens a "[category] NAME" issue. On open/edit: check it and comment a table.
+# On the `approved` label: file its symbols under the category in library.json's catalog, comment, close.
+# Symbol submissions and fixes are validate.yml / publish.yml; their conditions never match a category issue.
+on:
+  issues:
+    types: [opened, edited, labeled]
+jobs:
+  validate:
+    if: (github.event.action == 'opened' || github.event.action == 'edited') && (startsWith(github.event.issue.title, '[category]') || contains(github.event.issue.body, 'Category suggestion from SignalFlow'))
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const lib = require(`${process.env.GITHUB_WORKSPACE}/scripts/symbol.js`);
+            const issue = context.payload.issue;
+            const say = body => github.rest.issues.createComment({ ...context.repo, issue_number: issue.number, body });
+            const label = (add, remove) => Promise.all([
+              add && github.rest.issues.addLabels({ ...context.repo, issue_number: issue.number, labels: [add] }),
+              remove && github.rest.issues.removeLabel({ ...context.repo, issue_number: issue.number, name: remove }).catch(() => {}),
+            ]);
+            let raw;
+            try { raw = lib.parseCategory(issue.body); }
+            catch (e) {
+              await say(`❌ Could not read the suggestion: ${e.message}\n\nEdit the issue so its body has the \`\`\`json block the app wrote.`);
+              await label('invalid', 'category'); return;
+            }
+            const errs = lib.validateCategory(raw);
+            if (errs.length) {
+              await say(`❌ Suggestion rejected by validation:\n\n- ${errs.join('\n- ')}\n\nEdit the issue to fix it; this check re-runs automatically.`);
+              await label('invalid', 'category'); return;
+            }
+            const s = lib.normaliseCategory(raw);
+            await say(`✅ Valid category suggestion.\n\n${lib.categorySummary(s)}\n\nMaintainer: add the **approved** label to file these symbols under **${s.category}** in \`library.json\`; close the issue to reject.`);
+            await label('category', 'invalid');
+  publish:
+    if: github.event.action == 'labeled' && github.event.label.name == 'approved' && (startsWith(github.event.issue.title, '[category]') || contains(github.event.issue.body, 'Category suggestion from SignalFlow'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        id: check
+        with:
+          script: |
+            const lib = require(`${process.env.GITHUB_WORKSPACE}/scripts/symbol.js`);
+            const fs = require('fs');
+            const issue = context.payload.issue;
+            let s;
+            try {
+              const raw = lib.parseCategory(issue.body);
+              const errs = lib.validateCategory(raw);
+              if (errs.length) throw new Error(errs.join('; '));
+              s = lib.normaliseCategory(raw);
+            } catch (e) {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: issue.number, body: `❌ Not published — the suggestion no longer validates: ${e.message}` });
+              core.setFailed(e.message); return;
+            }
+            fs.writeFileSync(`${process.env.RUNNER_TEMP}/category.json`, JSON.stringify(s));
+      # Same retry loop as publish.yml: a symbol approved at the same moment pushes first, so fetch the latest and
+      # apply again. The category name is checked against [A-Za-z0-9 /&+-] by validateCategory, and it still only
+      # travels through files and env vars, never pasted into this script's text.
+      - name: File the symbols in library.json and push
+        id: merge
+        env:
+          ISSUE: ${{ github.event.issue.number }}
+          SUG: ${{ runner.temp }}/category.json
+        run: |
+          git config user.name "signalflow-bot"
+          git config user.email "signalflow-bot@users.noreply.github.com"
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            out=$(node scripts/publish-category.js "$SUG")
+            moved=${out%% *}; name=${out#* }
+            if [ "$moved" = 0 ]; then echo "what=none" >> "$GITHUB_OUTPUT"; exit 0; fi
+            git add library.json
+            printf 'File %s symbol(s) under %s (#%s)\n' "$moved" "$name" "$ISSUE" | git commit -q -F -
+            if git push -q origin HEAD:main; then
+              echo "what=done" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt): library.json changed first. Retrying on the new copy."
+            sleep $(( (RANDOM % 6) + 2 ))
+          done
+          echo "Gave up after 8 attempts."
+          exit 1
+      - uses: actions/github-script@v7
+        env:
+          WHAT: ${{ steps.merge.outputs.what }}
+          SUG: ${{ runner.temp }}/category.json
+        with:
+          script: |
+            const s = JSON.parse(require('fs').readFileSync(process.env.SUG, 'utf8'));
+            const n = s.symbols.length;
+            const issue = context.payload.issue;
+            await github.rest.issues.createComment({ ...context.repo, issue_number: issue.number,
+              body: process.env.WHAT === 'none'
+                ? `ℹ️ Nothing to change: ${n === 1 ? 'that symbol is' : 'those symbols are'} already filed under **${s.category}**.`
+                : `🚀 Filed ${n} symbol${n === 1 ? '' : 's'} under **${s.category}** in \`library.json\`. Every SignalFlow app picks it up on its next sync (within 30 minutes, or Repo → Sync now).` });
+            await github.rest.issues.update({ ...context.repo, issue_number: issue.number, state: 'closed', state_reason: 'completed' });
+      - if: failure() && steps.check.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({ ...context.repo, issue_number: context.payload.issue.number,
+              body: `❌ Not published — pushing to \`library.json\` failed (see the workflow run). Remove the **approved** label and add it again to retry.` });
