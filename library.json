@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-19T12:33:02.140Z",
+  "updated": "2026-10-25T17:53:59.038Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -2367,5 +2367,13 @@
         }
       ]
     }
-  ]
+  ],
+  "catalog": {
+    "cats": [],
+    "defs": {
+      "bm-vh-smart-control": {
+        "class": "control"
+      }
+    }
+  }
 }
