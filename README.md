@@ -35,11 +35,33 @@ built-in symbols included. Closing the issue rejects it.
 A symbol submitted in a category nobody has used yet creates that category when
 it's approved.
 
+### Class and category
+
+Every symbol has a **class**, the department it belongs to (video, audio,
+lighting, network, control, power), and a **category**, the finer filing under
+it. The app's library filter works by class. The app works a class out for itself:
+set on the symbol, else the class its category is allotted to, else from its ports.
+
+The maintainer's symbol desk can change either one for any symbol, built-ins
+included, and allot a category to a class. It opens a `[catalog] ...` issue and
+adds the **approved** label; `catalog.yml` writes the change into `library.json`'s
+`catalog`, which every app applies on its next sync:
+
+```
+"catalog": {
+  "cats": ["Amplifiers"],                                  extra categories
+  "defs": { "<symbol id>": { "class": "audio", "category": "Amplifiers" } },
+  "catClass": { "amplifiers": "audio" }                    a category's class
+}
+```
+
 ## Maintainer notes
 
 - Review queue: [open submissions](../../issues?q=is%3Aissue+is%3Aopen+label%3Asymbol),
   [category suggestions](../../issues?q=is%3Aissue+is%3Aopen+label%3Acategory).
 - `scripts/symbol.js` holds the validation/normalisation used by the workflows
-  and by the maintainer bridge's direct publish, and the category-suggestion
-  functions (`parseCategory`, `validateCategory`, `applyCategory`). Its
-  `APP_CATEGORIES` is a copy of the app's `CATEGORIES`: keep the two in step.
+  and by the maintainer bridge's direct publish, the category-suggestion
+  functions (`parseCategory`, `validateCategory`, `applyCategory`) and the
+  catalog-edit ones (`parseCatalogEdit`, `validateCatalogEdit`, `applyCatalogEdit`).
+  Its `APP_CATEGORIES` is a copy of the app's `CATEGORIES` and `CLASSES` of the
+  app's classes: keep them in step.

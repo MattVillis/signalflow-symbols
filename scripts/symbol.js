@@ -169,10 +169,116 @@ function applyCategory(file, s) {
     if (cur.category !== name) { defs[x.id] = { ...cur, category: name }; moved++; }
   });
   if (Object.keys(defs).length > 2000) throw new Error("the catalog is full (2000 re-filed symbols)");
-  file.catalog = { cats, defs };
+  // other catalog keys (catClass, written by a catalog edit) are kept: this used to rebuild the catalog as {cats, defs}
+  file.catalog = { ...cat, cats, defs };
   return { name, moved };
+}
+
+/* ---------- catalog edits from the symbol desk (app 1.34.0) ----------
+   Every symbol has a CLASS (video, audio, lighting, network, control, power: the department) and a CATEGORY (the finer
+   filing). The app works a class out by itself: set on the symbol, else the class its category is allotted to, else its
+   ports. The maintainer's symbol desk overrides that for ANY symbol, built-ins too, through library.json's catalog:
+     catalog.defs[id].class      a symbol's class          catalog.defs[id].category   where it is filed
+     catalog.catClass[key]       the class a category is allotted to (key = the category in lower case)
+   The desk opens a "[catalog] ..." issue carrying the marker below and a json block, then adds the approved label
+   itself; catalog.yml applies it (only someone who can label issues can do that). The block is
+     {"symbols": [{"id", "name"?, "class"?, "category"?}], "categories": [{"name", "class"?}]}
+   where a class or category given as null CLEARS that setting (back to what the app works out) and a key left out
+   changes nothing. A category nobody has yet is created. Custom is the catch-all: never allotted, nothing filed in it. */
+const CLASSES = ["video", "audio", "lighting", "network", "control", "power"];
+const CATALOG_MARK = "Catalog edit from the SignalFlow symbol desk";
+const isCatalogIssue = (title, body) => /^\[catalog\]/i.test(title || "") || String(body || "").includes(CATALOG_MARK);
+const catKeyOf = name => (cleanCategory(name) || "Custom").toLowerCase();
+function parseCatalogEdit(body) {
+  const m = /```json\s*([\s\S]*?)```/.exec(body || "");
+  if (!m || !m[1].trim()) throw new Error("no ```json block with the edit in it");
+  return JSON.parse(m[1].trim());
+}
+function validateCatalogEdit(e) {
+  if (!e || typeof e !== "object" || Array.isArray(e)) return ["the edit is not a JSON object"];
+  const errs = [], syms = e.symbols == null ? [] : e.symbols, cats = e.categories == null ? [] : e.categories;
+  const okName = v => typeof v === "string" && /^[A-Za-z0-9 /&+-]{2,18}$/.test(v.replace(/\s+/g, " ").trim()) && !/^custom$/i.test(v.trim());
+  const okClass = v => v === null || CLASSES.includes(v);
+  if (!Array.isArray(syms)) errs.push("`symbols` must be a list");
+  if (!Array.isArray(cats)) errs.push("`categories` must be a list");
+  if (errs.length) return errs;
+  if (!syms.length && !cats.length) errs.push("the edit changes nothing: no symbols and no categories");
+  if (syms.length > 500) errs.push(`too many symbols in one edit (${syms.length} > 500)`);
+  if (cats.length > 64) errs.push(`too many categories in one edit (${cats.length} > 64)`);
+  syms.forEach((s, i) => {
+    if (!s || typeof s.id !== "string" || !s.id.trim() || s.id.length > 64) { errs.push(`symbol ${i + 1}: missing or bad \`id\``); return; }
+    if (!("class" in s) && !("category" in s)) errs.push(`symbol ${s.id}: sets neither a class nor a category`);
+    if ("class" in s && !okClass(s.class)) errs.push(`symbol ${s.id}: class must be one of ${CLASSES.join(", ")}, or null to clear it`);
+    if ("category" in s && s.category !== null && !okName(s.category)) errs.push(`symbol ${s.id}: category must be 2 to 18 letters, digits, spaces or / & + - (and not Custom), or null to clear it`);
+  });
+  cats.forEach((c, i) => {
+    if (!c || !okName(c.name)) { errs.push(`category ${i + 1}: name must be 2 to 18 letters, digits, spaces or / & + - (and not Custom)`); return; }
+    if ("class" in c && !okClass(c.class)) errs.push(`category ${c.name}: class must be one of ${CLASSES.join(", ")}, or null to clear it`);
+  });
+  return errs;
+}
+function normaliseCatalogEdit(e) {
+  const syms = new Map(), cats = new Map();
+  (e.symbols || []).forEach(s => {
+    const o = { id: s.id.trim(), name: String(s.name || s.id).trim().toUpperCase().slice(0, 36) };
+    if ("class" in s) o.class = s.class;
+    if ("category" in s) o.category = s.category === null ? null : s.category.replace(/\s+/g, " ").trim();
+    syms.set(o.id, o);   // a symbol listed twice: the last one wins
+  });
+  (e.categories || []).forEach(c => { const name = c.name.replace(/\s+/g, " ").trim(); cats.set(name.toLowerCase(), { name, ...("class" in c ? { class: c.class } : {}) }); });
+  return { symbols: [...syms.values()], categories: [...cats.values()] };
+}
+const shown = v => v === null ? "*automatic*" : v === undefined ? "—" : String(v);
+function catalogEditSummary(e) {
+  const out = [];
+  if (e.categories.length) out.push(`**Categories**\n\n| Category | Class |\n|---|---|\n${e.categories.map(c => `| ${c.name} | ${"class" in c ? shown(c.class) : "—"} |`).join("\n")}`);
+  if (e.symbols.length) out.push(`**Symbols**\n\n| Symbol | Class | Category | id |\n|---|---|---|---|\n${e.symbols.map(s => `| ${s.name} | ${"class" in s ? shown(s.class) : "—"} | ${"category" in s ? shown(s.category) : "—"} | \`${s.id}\` |`).join("\n")}`);
+  return out.join("\n\n");
+}
+// apply a normalised edit to file.catalog (mutates file); returns how many settings actually changed
+function applyCatalogEdit(file, e) {
+  const cat = file.catalog && typeof file.catalog === "object" ? file.catalog : {};
+  const cats = Array.isArray(cat.cats) ? [...cat.cats] : [];
+  const defs = cat.defs && typeof cat.defs === "object" ? { ...cat.defs } : {};
+  const catClass = cat.catClass && typeof cat.catClass === "object" ? { ...cat.catClass } : {};
+  // an existing spelling wins ("amplifiers" files with "Amplifiers"); a new category is created
+  const spell = name => knownCategories(file).concat(cats).find(c => c.toLowerCase() === name.toLowerCase()) || name;
+  const ensure = name => {
+    if (APP_CATEGORIES.some(c => c.toLowerCase() === name.toLowerCase()) || cats.some(c => c.toLowerCase() === name.toLowerCase())) return false;
+    if (cats.length >= 64) throw new Error("the catalog already has 64 extra categories");
+    cats.push(name); return true;
+  };
+  let changed = 0;
+  e.categories.forEach(c => {
+    const name = spell(c.name), key = catKeyOf(name);
+    if (ensure(name)) changed++;
+    if (!("class" in c)) return;
+    if (c.class && catClass[key] !== c.class) { catClass[key] = c.class; changed++; }
+    else if (!c.class && catClass[key]) { delete catClass[key]; changed++; }
+  });
+  e.symbols.forEach(s => {
+    const cur = { ...(defs[s.id] || {}) }; let ch = false;
+    if ("class" in s) {
+      if (s.class && cur.class !== s.class) { cur.class = s.class; ch = true; }
+      else if (!s.class && cur.class) { delete cur.class; ch = true; }
+    }
+    if ("category" in s) {
+      if (s.category) { const name = spell(s.category); ensure(name); if (cur.category !== name) { cur.category = name; ch = true; } }
+      else if (cur.category) { delete cur.category; ch = true; }
+    }
+    if (!ch) return;
+    changed++;
+    if (Object.keys(cur).length) defs[s.id] = cur; else delete defs[s.id];
+  });
+  if (Object.keys(defs).length > 2000) throw new Error("the catalog is full (2000 symbols with settings)");
+  if (Object.keys(catClass).length > 128) throw new Error("too many allotted categories (128)");
+  const next = { ...cat, cats, defs };
+  if (Object.keys(catClass).length) next.catClass = catClass; else delete next.catClass;
+  file.catalog = next;
+  return { changed };
 }
 
 module.exports = { parseSubmission, validate, normalise, summary, upsert, fixTarget,
   APP_CATEGORIES, knownCategories, isNewCategory, cleanCategory,
-  CAT_MARK, isCategoryIssue, parseCategory, validateCategory, normaliseCategory, categorySummary, applyCategory };
+  CAT_MARK, isCategoryIssue, parseCategory, validateCategory, normaliseCategory, categorySummary, applyCategory,
+  CLASSES, CATALOG_MARK, isCatalogIssue, parseCatalogEdit, validateCatalogEdit, normaliseCatalogEdit, catalogEditSummary, applyCatalogEdit };

@@ -1,0 +1,83 @@
+name: Catalog edit
+# The symbol desk (the maintainer's page) changes a symbol's class or category, or which class a category is allotted
+# to, by opening a "[catalog] ..." issue and adding the `approved` label itself. On that label: apply the edit to
+# library.json's catalog, comment what changed, close. Only someone who can label issues can trigger it.
+# Symbol submissions, fixes and category suggestions are the other workflows; their conditions never match this marker.
+on:
+  issues:
+    types: [labeled]
+jobs:
+  publish:
+    if: github.event.label.name == 'approved' && (startsWith(github.event.issue.title, '[catalog]') || contains(github.event.issue.body, 'Catalog edit from the SignalFlow symbol desk'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        id: check
+        with:
+          script: |
+            const lib = require(`${process.env.GITHUB_WORKSPACE}/scripts/symbol.js`);
+            const fs = require('fs');
+            const issue = context.payload.issue;
+            let e;
+            try {
+              const raw = lib.parseCatalogEdit(issue.body);
+              const errs = lib.validateCatalogEdit(raw);
+              if (errs.length) throw new Error(errs.join('; '));
+              e = lib.normaliseCatalogEdit(raw);
+            } catch (err) {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: issue.number, body: `❌ Not published — the edit doesn't validate: ${err.message}` });
+              core.setFailed(err.message); return;
+            }
+            fs.writeFileSync(`${process.env.RUNNER_TEMP}/catalog.json`, JSON.stringify(e));
+      # Same retry loop as publish.yml and category.yml: something approved at the same moment pushes first, so fetch the
+      # latest and apply again. Names only travel through files, never pasted into this script's text.
+      - name: Apply the edit to library.json and push
+        id: merge
+        env:
+          ISSUE: ${{ github.event.issue.number }}
+          EDIT: ${{ runner.temp }}/catalog.json
+        run: |
+          git config user.name "signalflow-bot"
+          git config user.email "signalflow-bot@users.noreply.github.com"
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            changed=$(node scripts/publish-catalog.js "$EDIT")
+            if [ "$changed" = 0 ]; then echo "what=none" >> "$GITHUB_OUTPUT"; exit 0; fi
+            git add library.json
+            printf 'Catalog edit: %s change(s) (#%s)\n' "$changed" "$ISSUE" | git commit -q -F -
+            if git push -q origin HEAD:main; then
+              echo "what=done" >> "$GITHUB_OUTPUT"
+              echo "changed=$changed" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt): library.json changed first. Retrying on the new copy."
+            sleep $(( (RANDOM % 6) + 2 ))
+          done
+          echo "Gave up after 8 attempts."
+          exit 1
+      - uses: actions/github-script@v7
+        env:
+          WHAT: ${{ steps.merge.outputs.what }}
+          CHANGED: ${{ steps.merge.outputs.changed }}
+          EDIT: ${{ runner.temp }}/catalog.json
+        with:
+          script: |
+            const lib = require(`${process.env.GITHUB_WORKSPACE}/scripts/symbol.js`);
+            const e = JSON.parse(require('fs').readFileSync(process.env.EDIT, 'utf8'));
+            const issue = context.payload.issue;
+            await github.rest.issues.createComment({ ...context.repo, issue_number: issue.number,
+              body: process.env.WHAT === 'none'
+                ? `ℹ️ Nothing to change: the catalog already says this.\n\n${lib.catalogEditSummary(e)}`
+                : `🚀 Applied ${process.env.CHANGED} change${process.env.CHANGED === '1' ? '' : 's'} to the catalog in \`library.json\`. Every SignalFlow app picks it up on its next sync (within 30 minutes, or Repo → Sync now).\n\n${lib.catalogEditSummary(e)}` });
+            await github.rest.issues.update({ ...context.repo, issue_number: issue.number, state: 'closed', state_reason: 'completed' });
+      - if: failure() && steps.check.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({ ...context.repo, issue_number: context.payload.issue.number,
+              body: `❌ Not published — pushing to \`library.json\` failed (see the workflow run). Remove the **approved** label and add it again to retry.` });
