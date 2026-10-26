@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-26T08:31:57.569Z",
+  "updated": "2026-10-26T08:42:45.417Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -2364,6 +2364,244 @@
           "dir": "bi",
           "signal": "control",
           "conn": ""
+        }
+      ]
+    },
+    {
+      "id": "symmve10aug4e",
+      "rev": 1,
+      "name": "BARCO UDM-4K30",
+      "category": "Display",
+      "width": 200,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "LAN",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p1",
+          "label": "DMX IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "control",
+          "conn": "DMX 5PIN"
+        },
+        {
+          "id": "p2",
+          "label": "REMOTE XLR",
+          "side": "left",
+          "dir": "in",
+          "signal": "control",
+          "conn": ""
+        },
+        {
+          "id": "p3",
+          "label": "RS-232",
+          "side": "left",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "RS-232"
+        },
+        {
+          "id": "p4",
+          "label": "USB",
+          "side": "left",
+          "dir": "bi",
+          "signal": "power",
+          "conn": ""
+        },
+        {
+          "id": "p5",
+          "label": "3D SYNC IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p6",
+          "label": "AC IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "power",
+          "conn": ""
+        },
+        {
+          "id": "p7",
+          "label": "DMX OUT",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "DMX 5PIN"
+        },
+        {
+          "id": "p8",
+          "label": "3D SYNC OUT",
+          "side": "right",
+          "dir": "out",
+          "signal": "control",
+          "conn": "BNC"
+        },
+        {
+          "id": "p9",
+          "label": "12V OUT",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": ""
+        }
+      ],
+      "slots": [
+        {
+          "id": "s1",
+          "label": "SLOT L1",
+          "accepts": "in",
+          "card": "c1"
+        },
+        {
+          "id": "s2",
+          "label": "SLOT L2",
+          "accepts": "in",
+          "card": null
+        }
+      ],
+      "cards": [
+        {
+          "id": "c1",
+          "name": "PULSE QUAD COMBO",
+          "kind": "in",
+          "ports": [
+            {
+              "id": "p0",
+              "label": "SDI A",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": "12G SDI"
+            },
+            {
+              "id": "p1",
+              "label": "SDI B",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": "3G SDI"
+            },
+            {
+              "id": "p2",
+              "label": "SDI C",
+              "side": "right",
+              "dir": "bi",
+              "signal": "video",
+              "conn": "12G SDI"
+            },
+            {
+              "id": "p3",
+              "label": "SDI D",
+              "side": "right",
+              "dir": "bi",
+              "signal": "video",
+              "conn": "3G SDI"
+            },
+            {
+              "id": "p4",
+              "label": "DP",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": "DP"
+            },
+            {
+              "id": "p5",
+              "label": "HDMI",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": "HDMI"
+            },
+            {
+              "id": "p6",
+              "label": "HDBASET 1",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": ""
+            },
+            {
+              "id": "p7",
+              "label": "HDBASET 2",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": ""
+            }
+          ]
+        },
+        {
+          "id": "c2",
+          "name": "PULSE QUAD DP 1.2",
+          "kind": "in",
+          "ports": [
+            {
+              "id": "p0",
+              "label": "DP 1",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": "DP"
+            },
+            {
+              "id": "p1",
+              "label": "DP 2",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": "DP"
+            },
+            {
+              "id": "p2",
+              "label": "DP 3",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": "DP"
+            },
+            {
+              "id": "p3",
+              "label": "DP 4",
+              "side": "left",
+              "dir": "in",
+              "signal": "video",
+              "conn": "DP"
+            }
+          ]
+        },
+        {
+          "id": "c3",
+          "name": "PULSE SFP INPUT",
+          "kind": "in",
+          "ports": [
+            {
+              "id": "p0",
+              "label": "SFP 12G 1",
+              "side": "left",
+              "dir": "in",
+              "signal": "fiber",
+              "conn": "SFP+"
+            },
+            {
+              "id": "p1",
+              "label": "SFP 12G 2",
+              "side": "left",
+              "dir": "in",
+              "signal": "fiber",
+              "conn": "SFP+"
+            }
+          ]
         }
       ]
     }
