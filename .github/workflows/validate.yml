@@ -1,7 +1,7 @@
 name: Validate symbol submission
 on:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, closed, reopened]
 permissions:
   issues: write
   contents: read
@@ -22,6 +22,20 @@ jobs:
               add && github.rest.issues.addLabels({ ...context.repo, issue_number: issue.number, labels: [add] }),
               remove && github.rest.issues.removeLabel({ ...context.repo, issue_number: issue.number, name: remove }).catch(() => {}),
             ]);
+            // A submission its SENDER closes before review leaves the maintainer's queue and is never published (#28 and #29,
+            // 2026-10-27, closed by their sender's account seconds after opening): say so, so a mistake can be undone, and
+            // label it withdrawn. Reopening takes the label off. The maintainer's closes and the publish workflow's are not this.
+            if (context.payload.action === 'closed' || context.payload.action === 'reopened') {
+              const names = issue.labels.map(l => l.name), by = context.payload.sender?.login;
+              if (context.payload.action === 'reopened') {
+                if (names.includes('withdrawn')) await github.rest.issues.removeLabel({ ...context.repo, issue_number: issue.number, name: 'withdrawn' }).catch(() => {});
+                return;
+              }
+              if (names.includes('approved') || by !== issue.user.login || by === context.repo.owner) return;
+              await say(`This submission was closed by its sender before review, so it has left the maintainer's queue and won't be published.\n\nIf that wasn't meant, press **Reopen issue** below and it goes back in the queue.`);
+              await github.rest.issues.addLabels({ ...context.repo, issue_number: issue.number, labels: ['withdrawn'] });
+              return;
+            }
             let sym;
             try { sym = lib.parseSubmission(issue.body); }
             catch (e) {
@@ -52,5 +66,5 @@ jobs:
             }
             if (sameId) notes.push(`ℹ️ id \`${norm.id}\` already exists (**${sameId.name}**, rev ${sameId.rev}) — approving will **update** it.`);
             if (sameName) notes.push(`⚠️ a different symbol already has the name **${norm.name}** (id \`${sameName.id}\`) — approving will add a second one.`);
-            await say(`✅ Valid submission.\n\n${lib.summary(norm)}\n\n${notes.join('\n')}\n\nMaintainer: add the **approved** label to publish it to \`library.json\`; close the issue to reject.`);
+            await say(`✅ Checks passed: waiting for review.\n\n${lib.summary(norm)}\n\n${notes.join('\n')}\n\nNothing goes into the shared library until the maintainer has reviewed and approved it. **Please leave this issue open**: closing it takes the submission out of the review queue.\n\n<sub>Maintainer: the \`approved\` label publishes it to \`library.json\`; closing it as not planned turns it down.</sub>`);
             await label('symbol', 'invalid');
