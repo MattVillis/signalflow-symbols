@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-27T14:12:16.056Z",
+  "updated": "2026-10-27T14:12:24.497Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -3111,6 +3111,487 @@
         {
           "id": "p62",
           "label": "PSU 2",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": ""
+        }
+      ]
+    },
+    {
+      "id": "symmvqonde826",
+      "rev": 1,
+      "name": "HUAWEI S5735-S48P4XE-V2",
+      "category": "Network",
+      "width": 190,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "GE POE+ 1",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p1",
+          "label": "GE POE+ 2",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p2",
+          "label": "GE POE+ 3",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p3",
+          "label": "GE POE+ 4",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p4",
+          "label": "GE POE+ 5",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p5",
+          "label": "GE POE+ 6",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p6",
+          "label": "GE POE+ 7",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p7",
+          "label": "GE POE+ 8",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p8",
+          "label": "GE POE+ 9",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p9",
+          "label": "GE POE+ 10",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p10",
+          "label": "GE POE+ 11",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p11",
+          "label": "GE POE+ 12",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p12",
+          "label": "GE POE+ 13",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p13",
+          "label": "GE POE+ 14",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p14",
+          "label": "GE POE+ 15",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p15",
+          "label": "GE POE+ 16",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p16",
+          "label": "GE POE+ 17",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p17",
+          "label": "GE POE+ 18",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p18",
+          "label": "GE POE+ 19",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p19",
+          "label": "GE POE+ 20",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p20",
+          "label": "GE POE+ 21",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p21",
+          "label": "GE POE+ 22",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p22",
+          "label": "GE POE+ 23",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p23",
+          "label": "GE POE+ 24",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p24",
+          "label": "GE POE+ 25",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p25",
+          "label": "GE POE+ 26",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p26",
+          "label": "GE POE+ 27",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p27",
+          "label": "GE POE+ 28",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p28",
+          "label": "GE POE+ 29",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p29",
+          "label": "GE POE+ 30",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p30",
+          "label": "GE POE+ 31",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p31",
+          "label": "GE POE+ 32",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p32",
+          "label": "GE POE+ 33",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p33",
+          "label": "GE POE+ 34",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p34",
+          "label": "GE POE+ 35",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p35",
+          "label": "GE POE+ 36",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p36",
+          "label": "GE POE+ 37",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p37",
+          "label": "GE POE+ 38",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p38",
+          "label": "GE POE+ 39",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p39",
+          "label": "GE POE+ 40",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p40",
+          "label": "GE POE+ 41",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p41",
+          "label": "GE POE+ 42",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p42",
+          "label": "GE POE+ 43",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p43",
+          "label": "GE POE+ 44",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p44",
+          "label": "GE POE+ 45",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p45",
+          "label": "GE POE+ 46",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p46",
+          "label": "GE POE+ 47",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p47",
+          "label": "GE POE+ 48",
+          "side": "left",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "RJ45"
+        },
+        {
+          "id": "p48",
+          "label": "10GE 1",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p49",
+          "label": "10GE 2",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p50",
+          "label": "10GE 3",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p51",
+          "label": "10GE 4",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p52",
+          "label": "STACK 1",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p53",
+          "label": "STACK 2",
+          "side": "right",
+          "dir": "bi",
+          "signal": "network",
+          "conn": "SFP+"
+        },
+        {
+          "id": "p54",
+          "label": "CONSOLE",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "RS-232"
+        },
+        {
+          "id": "p55",
+          "label": "USB",
+          "side": "right",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "USB-A"
+        },
+        {
+          "id": "p56",
+          "label": "PSU 1",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": ""
+        },
+        {
+          "id": "p57",
+          "label": "PSU 2",
+          "side": "right",
+          "dir": "in",
+          "signal": "power",
+          "conn": ""
+        },
+        {
+          "id": "p58",
+          "label": "PSU 3",
           "side": "right",
           "dir": "in",
           "signal": "power",
