@@ -60,6 +60,17 @@ const normPorts = list => (list || []).map((p, i) => ({
 }));
 // a category name as the app writes one (its cleanCatName): letters, digits, spaces and / & + -, 18 characters
 const cleanCategory = v => String(v || "").replace(/[^A-Za-z0-9 /&+-]/g, "").replace(/\s+/g, " ").trim().slice(0, 18);
+// A symbol's physical block, checked the way the app's cleanPhys checks it (keep the two in step). null = none.
+function normPhys(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const mount = ["rack", "shelf", "none"].includes(raw.mount) ? raw.mount : null; if (!mount) return null;
+  const num = (v, max) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? Math.min(max, Math.round(n * 10) / 10) : null; };
+  const mm = raw.mm && typeof raw.mm === "object" ? { w: num(raw.mm.w, 2000), h: num(raw.mm.h, 2000), d: num(raw.mm.d, 2000) } : null;
+  const widths = ["full", "half", "third", "quarter"];
+  return { mount, ...(mount === "rack" ? { ru: Math.max(1, Math.min(60, Math.round(Number(raw.ru)) || 1)), width: widths.includes(raw.width) ? raw.width : "full" } : {}),
+    ...(mm && (mm.w || mm.h || mm.d) ? { mm } : {}), ...(num(raw.kg, 999) ? { kg: num(raw.kg, 999) } : {}),
+    ...(num(raw.watts, 99999) ? { watts: Math.round(num(raw.watts, 99999)) } : {}), ...(num(raw.btu, 999999) ? { btu: Math.round(num(raw.btu, 999999)) } : {}) };
+}
 function normalise(sym) {
   const modular = isModular(sym);
   return {
@@ -69,6 +80,9 @@ function normalise(sym) {
     category: cleanCategory(sym.category) || "Custom",
     width: Math.max(130, Math.min(280, Number(sym.width) || 170)),
     ports: normPorts(sym.ports),
+    // the physical block (SignalFlow 2.0.0 rack elevations): how it mounts, U height, width class, mm, kg, W, BTU/h.
+    // Optional; kept as the app's cleanPhys keeps it, so a shared symbol draws the right size in a rack.
+    ...(normPhys(sym.phys) ? { phys: normPhys(sym.phys) } : {}),
     ...(modular ? {
       slots: sym.slots.map((sl, i) => ({ id: typeof sl.id === "string" && sl.id ? sl.id : `s${i + 1}`, label: sl.label.trim().toUpperCase().slice(0, 12), accepts: sl.accepts, card: sl.card || null })),
       cards: sym.cards.map((c, i) => ({ id: typeof c.id === "string" && c.id ? c.id : `c${i + 1}`, name: c.name.trim().toUpperCase().slice(0, 24), kind: c.kind, ports: normPorts(c.ports) })),
