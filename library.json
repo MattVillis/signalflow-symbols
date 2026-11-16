@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-11-16T10:54:58.905Z",
+  "updated": "2026-11-16T12:12:56.641Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -1540,9 +1540,9 @@
     },
     {
       "id": "symmv57jhqzv",
-      "rev": 2,
+      "rev": 3,
       "name": "FOCUSRITE AM2",
-      "category": "Custom",
+      "category": "Audio",
       "width": 170,
       "ports": [
         {
@@ -1577,7 +1577,32 @@
           "signal": "audio",
           "conn": "TRS"
         }
-      ]
+      ],
+      "phys": {
+        "mount": "shelf",
+        "at": {
+          "p3": [
+            "f",
+            12.5,
+            51.1
+          ],
+          "p1": [
+            "r",
+            58.8,
+            50
+          ],
+          "p2": [
+            "r",
+            76.3,
+            50
+          ],
+          "p0": [
+            "r",
+            16.3,
+            50
+          ]
+        }
+      }
     },
     {
       "id": "symmvdokooy1w",
