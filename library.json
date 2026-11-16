@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-11-16T10:54:54.682Z",
+  "updated": "2026-11-16T10:54:58.905Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -1540,7 +1540,7 @@
     },
     {
       "id": "symmv57jhqzv",
-      "rev": 1,
+      "rev": 2,
       "name": "FOCUSRITE AM2",
       "category": "Custom",
       "width": 170,
