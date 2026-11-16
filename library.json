@@ -1,7 +1,7 @@
 {
   "version": 1,
   "kind": "signalflow-library",
-  "updated": "2026-10-27T14:12:24.497Z",
+  "updated": "2026-11-16T10:54:54.682Z",
   "library": [
     {
       "id": "symmu6koddrg",
@@ -3596,6 +3596,197 @@
           "dir": "in",
           "signal": "power",
           "conn": ""
+        }
+      ]
+    },
+    {
+      "id": "symmwgrb6om12",
+      "rev": 2,
+      "name": "APC SMART-UPS SRT2200RMXLI-NC",
+      "category": "Power",
+      "width": 200,
+      "ports": [
+        {
+          "id": "p0",
+          "label": "AC IN",
+          "side": "left",
+          "dir": "in",
+          "signal": "power",
+          "conn": ""
+        },
+        {
+          "id": "p1",
+          "label": "EPO",
+          "side": "left",
+          "dir": "in",
+          "signal": "control",
+          "conn": ""
+        },
+        {
+          "id": "p2",
+          "label": "SERIAL",
+          "side": "left",
+          "dir": "bi",
+          "signal": "control",
+          "conn": "RS-232"
+        },
+        {
+          "id": "p3",
+          "label": "USB",
+          "side": "left",
+          "dir": "bi",
+          "signal": "control",
+          "conn": ""
+        },
+        {
+          "id": "p4",
+          "label": "BATT PACK",
+          "side": "left",
+          "dir": "bi",
+          "signal": "power",
+          "conn": ""
+        },
+        {
+          "id": "p5",
+          "label": "OUT C13 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p6",
+          "label": "OUT C13 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p7",
+          "label": "OUT C13 3",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p8",
+          "label": "OUT C13 4",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p9",
+          "label": "OUT C13 5",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p10",
+          "label": "OUT C13 6",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p11",
+          "label": "OUT C13 7",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p12",
+          "label": "OUT C13 8",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C13"
+        },
+        {
+          "id": "p13",
+          "label": "OUT C19 1",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C19"
+        },
+        {
+          "id": "p14",
+          "label": "OUT C19 2",
+          "side": "right",
+          "dir": "out",
+          "signal": "power",
+          "conn": "IEC C19"
+        }
+      ],
+      "phys": {
+        "mount": "rack",
+        "ru": 2,
+        "width": "full"
+      },
+      "slots": [
+        {
+          "id": "s1",
+          "label": "SMARTSLOT",
+          "accepts": "any",
+          "card": "c1"
+        }
+      ],
+      "cards": [
+        {
+          "id": "c1",
+          "name": "AP9631 NMC2",
+          "kind": "out",
+          "ports": [
+            {
+              "id": "p0",
+              "label": "LAN",
+              "side": "right",
+              "dir": "bi",
+              "signal": "network",
+              "conn": "RJ45"
+            },
+            {
+              "id": "p1",
+              "label": "UNIV I/O 1",
+              "side": "right",
+              "dir": "bi",
+              "signal": "control",
+              "conn": ""
+            },
+            {
+              "id": "p2",
+              "label": "UNIV I/O 2",
+              "side": "right",
+              "dir": "bi",
+              "signal": "control",
+              "conn": ""
+            },
+            {
+              "id": "p3",
+              "label": "CONSOLE",
+              "side": "right",
+              "dir": "bi",
+              "signal": "control",
+              "conn": ""
+            },
+            {
+              "id": "p4",
+              "label": "USB",
+              "side": "right",
+              "dir": "bi",
+              "signal": "control",
+              "conn": "USB-A"
+            }
+          ]
         }
       ]
     }
