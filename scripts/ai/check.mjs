@@ -7,7 +7,9 @@
 // what it found. NOTHING IS CHANGED OR PUBLISHED: the symbol desk shows the comment, and the maintainer takes the AI
 // version (or not) and approves as before.
 // Settings (repository variables): AI_MODEL (claude-opus-5-5), AI_EFFORT (high), AI_DAILY_MAX checks in 24 hours (10),
-// AI_MAX_USD a check (3). The key is the ANTHROPIC_API_KEY secret; without it nothing runs.
+// AI_MAX_USD a check (3), AI_SINCE (2026-11-21: a submission sent before it is checked only when asked for, so switching the
+// check on does not spend the daily budget on the ones already waiting). The key is the ANTHROPIC_API_KEY secret; without it
+// nothing runs.
 import { readFileSync, appendFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
@@ -24,6 +26,7 @@ const API = (env.GITHUB_API_URL || "https://api.github.com").replace(/\/$/, "");
 const MODEL = env.AI_MODEL || "claude-opus-5-5", EFFORT = env.AI_EFFORT || "high";
 const DAILY = Number(env.AI_DAILY_MAX) > 0 ? Number(env.AI_DAILY_MAX) : 10;
 const MAX_USD = Number(env.AI_MAX_USD) > 0 ? Number(env.AI_MAX_USD) : 3;
+const SINCE = /^\d{4}-\d\d-\d\d/.test(env.AI_SINCE || "") ? env.AI_SINCE : "2026-11-21";
 const BUILTINS_URL = env.BUILTINS_URL || "https://mattvillis.github.io/signalflow/builtins.json";
 const log = (...a) => console.log(...a);
 const summary = line => { if (env.GITHUB_STEP_SUMMARY) appendFileSync(env.GITHUB_STEP_SUMMARY, line + "\n"); };
@@ -78,9 +81,9 @@ async function main() {
   const subs = issues.filter(i => R.isSymbolIssue(i, lib));
   // a submission that doesn't pass the library's own checks is not checked (validate.yml has said why)
   const read = i => { try { const raw = lib.parseSubmission(i.body); return lib.validate(raw).length ? null : lib.normalise(raw); } catch { return null; } };
-  const todo = subs.filter(i => R.wantsCheck(i) || (wanted && i.state === "open")).sort((a, b) => a.number - b.number)
+  const todo = subs.filter(i => R.wantsCheck(i, SINCE) || (wanted && i.state === "open")).sort((a, b) => a.number - b.number)
     .map(i => ({ issue: i, sub: read(i) })).filter(x => x.sub || log(`#${x.issue.number}: doesn't pass the library's checks, so it isn't checked`));
-  log(`${subs.length} open symbol submission${subs.length === 1 ? "" : "s"}, ${todo.length} to check (model ${MODEL}, effort ${EFFORT}, at most ${DAILY} a day, ${MAX_USD} each)`);
+  log(`${subs.length} open symbol submission${subs.length === 1 ? "" : "s"}, ${todo.length} to check (model ${MODEL}, effort ${EFFORT}, at most ${DAILY} a day, $${MAX_USD} each, sent since ${SINCE} or asked for)`);
   if (!todo.length) return;
   await ensureLabels();
   let used = await usedToday();

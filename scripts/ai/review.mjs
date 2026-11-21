@@ -27,12 +27,13 @@ export function isSymbolIssue(i, lib) {
   if (/^\[(fix|category|catalog)\]/i.test(t) || b.includes("Symbol correction from SignalFlow") || lib.fixTarget(b)) return false;
   return /^\[symbol\]/i.test(t) || b.includes("Symbol submission from SignalFlow");
 }
-// open, not approved, and asked for or never checked (a checked or failed one waits for ai-check). A leftover ai-checking
-// label (a run that died part way) does not stop it.
-export function wantsCheck(i) {
+// open, not approved, and asked for, or never checked and sent on or after `since` (an ISO date: the submissions already
+// waiting when the check was switched on are checked only when asked for). A checked or failed one waits for ai-check.
+// A leftover ai-checking label (a run that died part way) does not stop it.
+export function wantsCheck(i, since = "") {
   const L = new Set(labelNames(i));
   if (i.state !== "open" || L.has("approved")) return false;
-  return L.has(LABELS.ask) || (!L.has(LABELS.done) && !L.has(LABELS.failed));
+  return L.has(LABELS.ask) || (!L.has(LABELS.done) && !L.has(LABELS.failed) && String(i.created_at || "") >= since);
 }
 
 /* ---------- the submission as sent: the text the publish workflow reads, and a hash of it ----------

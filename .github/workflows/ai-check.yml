@@ -5,7 +5,8 @@ name: AI check of symbol submissions
 # Every run goes through ALL the submissions that want a check (scripts/ai/check.mjs), so a run that the concurrency
 # queue drops loses nothing, and the hourly one picks up whatever is left (today's limit reached, a run that failed).
 # Switch it on with the repository secret ANTHROPIC_API_KEY; without it every run ends at once.
-# Optional repository variables: AI_MODEL (claude-opus-5-5), AI_EFFORT (high), AI_DAILY_MAX (10), AI_MAX_USD (3).
+# Optional repository variables: AI_MODEL (claude-opus-5-5), AI_EFFORT (high), AI_DAILY_MAX (10), AI_MAX_USD (3), AI_SINCE
+# (2026-11-21: a submission sent before it is checked only when asked for, with the ai-check label or the desk's button).
 on:
   issues:
     types: [opened, labeled]
@@ -57,3 +58,4 @@ jobs:
           AI_EFFORT: ${{ vars.AI_EFFORT }}
           AI_DAILY_MAX: ${{ vars.AI_DAILY_MAX }}
           AI_MAX_USD: ${{ vars.AI_MAX_USD }}
+          AI_SINCE: ${{ vars.AI_SINCE }}

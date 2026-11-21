@@ -71,8 +71,10 @@ issue holds, as before.
 
 - Switched on by the repository secret `ANTHROPIC_API_KEY`; without it every run ends at once.
 - Optional repository variables: `AI_MODEL` (`claude-opus-5-5`), `AI_EFFORT` (`high`),
-  `AI_DAILY_MAX` (checks in any 24 hours, `10`), `AI_MAX_USD` (a check's budget, `3`).
-  Each comment states what its check cost.
+  `AI_DAILY_MAX` (checks in any 24 hours, `10`), `AI_MAX_USD` (a check's budget, `3`),
+  `AI_SINCE` (`2026-11-21`: a submission sent before that date is checked only when it is
+  asked for, so switching the check on doesn't spend days of budget on the ones already
+  waiting). Each comment states what its check cost.
 - The labels: `ai-check` asks for a check (again), `ai-checking` while one runs,
   `ai-checked` done, `ai-failed` it didn't finish (its comment says why; not retried
   until asked).
