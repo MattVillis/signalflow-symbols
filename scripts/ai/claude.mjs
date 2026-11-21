@@ -71,6 +71,8 @@ export class Conversation {
     const p = { model: this.model, max_tokens: 64000, system: this.system, tools: this.tools, messages: this.messages,
       output_config: { effort: this.effort }, cache_control: { type: "ephemeral" } };
     if (this.finalOnly) p.tool_choice = { type: "none" };
+    // the web tools' dynamic filtering runs in a code-execution container: a continuation must name it, or it starts afresh
+    if (this.container) p.container = this.container;
     // a request a model declines is retried on another model by the API itself ("default": it picks by the reason)
     if (this.fallbacks) { p.betas = ["server-side-fallback-2026-07-01"]; p.fallbacks = "default"; }
     let msg;
@@ -84,6 +86,7 @@ export class Conversation {
       if (e instanceof Anthropic.APIError) throw new CheckError(`the API answered ${e.status ?? "with an error"}: ${String(e.message).slice(0, 300)}`);
       throw e;
     }
+    if (msg.container?.id) this.container = msg.container.id;
     const u = msg.usage || {};
     this.usage.requests++;
     this.usage.input += u.input_tokens || 0; this.usage.output += u.output_tokens || 0;
