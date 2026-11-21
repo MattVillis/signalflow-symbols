@@ -1,0 +1,9 @@
+{
+  "name": "signalflow-ai-check",
+  "private": true,
+  "type": "module",
+  "description": "The AI check of symbol submissions (.github/workflows/ai-check.yml)",
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.12.0"
+  }
+}

@@ -1,0 +1,59 @@
+name: AI check of symbol submissions
+# Claude checks each new [symbol] submission: the device's connectors against the maker's data, its size and power, where
+# each connector sits on the panels, and whether the library already has it. The result is a comment on the issue that
+# the symbol desk shows, with "the AI version" of the symbol to take or leave. Nothing is changed or published here.
+# Every run goes through ALL the submissions that want a check (scripts/ai/check.mjs), so a run that the concurrency
+# queue drops loses nothing, and the hourly one picks up whatever is left (today's limit reached, a run that failed).
+# Switch it on with the repository secret ANTHROPIC_API_KEY; without it every run ends at once.
+# Optional repository variables: AI_MODEL (claude-opus-5-5), AI_EFFORT (high), AI_DAILY_MAX (10), AI_MAX_USD (3).
+on:
+  issues:
+    types: [opened, labeled]
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: "One issue number to check (empty: every submission waiting for a check)"
+        required: false
+permissions:
+  issues: write
+  contents: read
+concurrency:
+  group: ai-check
+  cancel-in-progress: false
+jobs:
+  check:
+    if: >-
+      github.event_name != 'issues' ||
+      (github.event.action == 'opened' && (startsWith(github.event.issue.title, '[symbol]') || contains(github.event.issue.body, 'Symbol submission from SignalFlow'))) ||
+      (github.event.action == 'labeled' && github.event.label.name == 'ai-check')
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    steps:
+      - if: env.HAS_KEY != 'true'
+        run: echo "No ANTHROPIC_API_KEY secret, so the AI check is off. Add it under Settings > Secrets and variables > Actions."
+      - if: env.HAS_KEY == 'true'
+        uses: actions/checkout@v4
+      - if: env.HAS_KEY == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - if: env.HAS_KEY == 'true'
+        working-directory: scripts/ai
+        run: npm ci --no-audit --no-fund
+      # The issue number travels in env vars only: nothing a submitter wrote is pasted into this script.
+      - if: env.HAS_KEY == 'true'
+        run: node scripts/ai/check.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT_ISSUE: ${{ github.event.issue.number }}
+          ISSUE: ${{ github.event.inputs.issue }}
+          AI_MODEL: ${{ vars.AI_MODEL }}
+          AI_EFFORT: ${{ vars.AI_EFFORT }}
+          AI_DAILY_MAX: ${{ vars.AI_DAILY_MAX }}
+          AI_MAX_USD: ${{ vars.AI_MAX_USD }}
