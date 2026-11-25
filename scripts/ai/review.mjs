@@ -325,7 +325,7 @@ export function errorBody({ issue, message, meta }) {
 // the desk's reading of a check comment (it carries its own copy of this: keep in step). null = not a check comment.
 export function readCheck(comment) {
   if (!comment || comment.user?.login !== BOT) return null;
-  const m = new RegExp(`<!--\\s*${MARKER}\\s+(\\{[^]*?\\})\\s*-->`).exec(comment.body || "");
+  const m = new RegExp(`^\\s*<!--\\s*${MARKER}\\s+(\\{[^]*?\\})\\s*-->`).exec(comment.body || "");
   if (!m) return null;
   let head; try { head = JSON.parse(m[1]); } catch { return null; }
   const rest = (comment.body || "").slice(m.index + m[0].length), b = /```json\s*([\s\S]*?)```/.exec(rest);
