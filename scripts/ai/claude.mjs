@@ -8,31 +8,44 @@
 // - refusal / max_tokens / no JSON after one reminder: the check fails with that reason
 import Anthropic from "@anthropic-ai/sdk";
 import { TOOLS, runTool } from "./tools.mjs";
-import { costOf, parseAnswer } from "./review.mjs";
+import { costOf, parseAnswer, PRICES } from "./review.mjs";
 
 export class CheckError extends Error {
   constructor(message, { fatal = false } = {}) { super(message); this.fatal = fatal; }
 }
-// the API's server tools (their dynamic-filtering versions), capped per request
+// the API's server tools, capped per request: their dynamic-filtering versions (Claude filters what it found with code, in
+// a container, before it reaches the context), or for a model that refuses those the basic ones (whole pages go into the
+// context)
 export const SERVER_TOOLS = [
   { type: "web_search_20260209", name: "web_search", max_uses: 8 },
   { type: "web_fetch_20260209", name: "web_fetch", max_uses: 10, max_content_tokens: 40000 },
 ];
+export const BASIC_TOOLS = [
+  { type: "web_search_20250305", name: "web_search", max_uses: 8 },
+  { type: "web_fetch_20250910", name: "web_fetch", max_uses: 10, max_content_tokens: 40000 },
+];
+// what the API refused once is not sent again in this run: every later check would be refused the same way
+const RUN = { fallbacks: true, basicWeb: false };
 
 export class Conversation {
   constructor({ model, effort, system, usd, requests = 16, minutes = 15, fallbacks = true, log = () => {} }) {
     // the key from ANTHROPIC_API_KEY; ANTHROPIC_BASE_URL moves it (the tests' fake API)
     this.client = new Anthropic({ maxRetries: 3, timeout: 8 * 60 * 1000 });
-    Object.assign(this, { model, effort, usd, requestCap: requests, fallbacks, log });
-    this.system = [{ type: "text", text: system }];
-    this.tools = [...SERVER_TOOLS, ...TOOLS];
+    Object.assign(this, { model, effort, usd, requestCap: requests, fallbacks: fallbacks && RUN.fallbacks, log });
+    // the system prompt is the same for every check of a run (review.mjs systemPrompt): a cache breakpoint at its end lets
+    // each later check read the tools and the prompt from the cache. The top-level cache_control (automatic caching) in
+    // request() caches the conversation as it grows. Both are 5-minute entries (a longer one may only come first).
+    this.system = [{ type: "text", text: system, cache_control: { type: "ephemeral" } }];
+    this.tools = [...(RUN.basicWeb ? BASIC_TOOLS : SERVER_TOOLS), ...TOOLS];
+    this.spent = 0;
     this.messages = [];
     this.used = {};
     this.usage = { input: 0, output: 0, cacheWrite: 0, cacheRead: 0, searches: 0, fetches: 0, requests: 0 };
     this.deadline = Date.now() + minutes * 60 * 1000;
     this.finalOnly = false;
   }
-  cost() { return costOf(this.model, this.usage); }
+  // dollars so far, added up request by request (Haiku 5.5's price depends on each request's prompt length)
+  cost() { return this.spent; }
   // a user turn (the submission, or a contradiction to resolve) -> the parsed JSON answer
   async ask(text) {
     this.messages.push({ role: "user", content: [{ type: "text", text }] });
@@ -79,7 +92,11 @@ export class Conversation {
     try { msg = await this.client.beta.messages.stream(p).finalMessage(); }
     catch (e) {
       // an account without the fallback beta: carry on without it
-      if (this.fallbacks && e instanceof Anthropic.BadRequestError && /fallback/i.test(e.message)) { this.fallbacks = false; this.log("  (server-side fallback refused: off for this run)"); return this.request(); }
+      if (this.fallbacks && e instanceof Anthropic.BadRequestError && /fallback/i.test(e.message)) { this.fallbacks = RUN.fallbacks = false; this.log("  (server-side fallback refused: off for this run)"); return this.request(); }
+      // a model without the web tools' dynamic filtering: the basic versions, for this run
+      if (!RUN.basicWeb && e instanceof Anthropic.BadRequestError && /web_(search|fetch)_2026|dynamic filtering/i.test(e.message)) {
+        RUN.basicWeb = true; this.tools = [...BASIC_TOOLS, ...TOOLS]; this.log("  (the dynamic-filtering web tools refused: the basic web tools for this run)"); return this.request();
+      }
       // a bad key or no credit stops the whole run: every other check would fail the same way
       if (e instanceof Anthropic.AuthenticationError || e instanceof Anthropic.PermissionDeniedError) throw new CheckError(`the API key was refused (${e.status}): check the ANTHROPIC_API_KEY secret`, { fatal: true });
       if (e instanceof Anthropic.BadRequestError && /credit|billing|spend/i.test(e.message)) throw new CheckError(`the API refused the request: ${e.message}`, { fatal: true });
@@ -88,10 +105,12 @@ export class Conversation {
     }
     if (msg.container?.id) this.container = msg.container.id;
     const u = msg.usage || {};
+    const one = { input: u.input_tokens || 0, output: u.output_tokens || 0, cacheWrite: u.cache_creation_input_tokens || 0,
+      cacheRead: u.cache_read_input_tokens || 0, searches: u.server_tool_use?.web_search_requests || 0, fetches: u.server_tool_use?.web_fetch_requests || 0 };
     this.usage.requests++;
-    this.usage.input += u.input_tokens || 0; this.usage.output += u.output_tokens || 0;
-    this.usage.cacheWrite += u.cache_creation_input_tokens || 0; this.usage.cacheRead += u.cache_read_input_tokens || 0;
-    this.usage.searches += u.server_tool_use?.web_search_requests || 0; this.usage.fetches += u.server_tool_use?.web_fetch_requests || 0;
+    for (const k of ["input", "output", "cacheWrite", "cacheRead", "searches", "fetches"]) this.usage[k] += one[k];
+    // priced as the model that answered (a request a model declined may have been served by a fallback model)
+    this.spent += costOf(PRICES[msg.model] ? msg.model : this.model, one);
     this.log(`  request ${this.usage.requests}: ${msg.stop_reason}, in ${u.input_tokens || 0} + cache ${u.cache_read_input_tokens || 0}/${u.cache_creation_input_tokens || 0}, out ${u.output_tokens || 0}, about $${this.cost().toFixed(2)} so far`);
     // the whole answer goes back as it came (thinking blocks, server tool blocks and all)
     this.messages.push({ role: "assistant", content: msg.content });

@@ -7,6 +7,9 @@ name: AI check of symbol submissions
 # Switch it on with the repository secret ANTHROPIC_API_KEY; without it every run ends at once.
 # Optional repository variables: AI_MODEL (claude-opus-5-5), AI_EFFORT (high), AI_DAILY_MAX (10), AI_MAX_USD (3), AI_SINCE
 # (2026-11-21: a submission sent before it is checked only when asked for, with the ai-check label or the desk's button).
+# Run by hand (Actions > this workflow > Run workflow): issue numbers to check ("69,70,71"), a model and an effort for that
+# run alone, and TRIAL: nothing is posted or labelled, and the comments it would have posted are the run's artifact
+# (ai-trial), to try another model on submissions that already have a check.
 on:
   issues:
     types: [opened, labeled]
@@ -15,8 +18,18 @@ on:
   workflow_dispatch:
     inputs:
       issue:
-        description: "One issue number to check (empty: every submission waiting for a check)"
+        description: "Issue numbers to check, e.g. 69 or 69,70,71 (empty: every submission waiting for a check)"
         required: false
+      model:
+        description: "Model for this run only, e.g. claude-sonnet-5-5 (empty: the AI_MODEL variable, else claude-opus-5-5)"
+        required: false
+      effort:
+        description: "Effort for this run only: low, medium, high, xhigh or max (empty: the AI_EFFORT variable, else high)"
+        required: false
+      trial:
+        description: "Trial: post nothing and change no labels; the results are the run's artifact (needs issue numbers)"
+        type: boolean
+        default: false
 permissions:
   issues: write
   contents: read
@@ -54,8 +67,16 @@ jobs:
           REPO: ${{ github.repository }}
           EVENT_ISSUE: ${{ github.event.issue.number }}
           ISSUE: ${{ github.event.inputs.issue }}
-          AI_MODEL: ${{ vars.AI_MODEL }}
-          AI_EFFORT: ${{ vars.AI_EFFORT }}
+          AI_MODEL: ${{ github.event.inputs.model || vars.AI_MODEL }}
+          AI_EFFORT: ${{ github.event.inputs.effort || vars.AI_EFFORT }}
+          AI_TRIAL: ${{ github.event.inputs.trial }}
           AI_DAILY_MAX: ${{ vars.AI_DAILY_MAX }}
           AI_MAX_USD: ${{ vars.AI_MAX_USD }}
           AI_SINCE: ${{ vars.AI_SINCE }}
+      - if: always() && env.HAS_KEY == 'true' && github.event.inputs.trial == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-trial
+          path: ai-trial/
+          retention-days: 14
+          if-no-files-found: warn

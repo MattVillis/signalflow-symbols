@@ -75,6 +75,16 @@ issue holds, as before.
   `AI_SINCE` (`2026-11-21`: a submission sent before that date is checked only when it is
   asked for, so switching the check on doesn't spend days of budget on the ones already
   waiting). Each comment states what its check cost.
+- Every check of a run sends the same system prompt (the instructions, the app's schema and
+  rules, the built-ins and the shared library) with a prompt-cache breakpoint at its end, so
+  the checks after the first read it from the cache instead of paying to write it again.
+  What belongs to one submission (the other submissions waiting, a shared symbol it would
+  update) goes in that check's own message.
+- **Run workflow** (by hand) takes issue numbers (`69,70,71`), a model and an effort for
+  that run alone, and **trial**: those issues are checked, but nothing is posted or
+  labelled, and the comments it would have posted are the run's `ai-trial` artifact. That is
+  the way to try another model (`claude-sonnet-5-5`, `claude-haiku-5-5`) on submissions that
+  already have a check, before changing `AI_MODEL`.
 - The labels: `ai-check` asks for a check (again), `ai-checking` while one runs,
   `ai-checked` done, `ai-failed` it didn't finish (its comment says why; not retried
   until asked).
