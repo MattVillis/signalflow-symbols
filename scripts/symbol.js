@@ -77,8 +77,11 @@ function normPlaces(o, n) {
 // A symbol's physical block, checked the way the app's cleanPhys checks it (keep the two in step). null = none.
 function normPhys(raw) {
   if (!raw || typeof raw !== "object") return null;
-  const at = normPlaces(raw.at, 3), bays = normPlaces(raw.bays, 4), where = { ...(at ? { at } : {}), ...(bays ? { bays } : {}) };
-  const mount = ["rack", "shelf", "none"].includes(raw.mount) ? raw.mount : null; if (!mount) return at || bays ? where : null;
+  // SignalFlow 2.2.0: a switch's PoE budget (poe, W) rides with or without a mount, and "vertical" is a 0U strip on the
+  // uprights (mm.h its length). A card connector may have a place of its own in at, keyed "<slot>.<port>".
+  const at = normPlaces(raw.at, 3), bays = normPlaces(raw.bays, 4), poe = Number(raw.poe) > 0 ? Math.min(99999, Math.round(Number(raw.poe))) : 0;
+  const where = { ...(at ? { at } : {}), ...(bays ? { bays } : {}), ...(poe ? { poe } : {}) };
+  const mount = ["rack", "shelf", "none", "vertical"].includes(raw.mount) ? raw.mount : null; if (!mount) return Object.keys(where).length ? where : null;
   const num = (v, max) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? Math.min(max, Math.round(n * 10) / 10) : null; };
   const mm = raw.mm && typeof raw.mm === "object" ? { w: num(raw.mm.w, 2000), h: num(raw.mm.h, 2000), d: num(raw.mm.d, 2000) } : null;
   const widths = ["full", "half", "third", "quarter"];
